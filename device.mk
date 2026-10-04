@@ -441,6 +441,8 @@ PRODUCT_PACKAGES += \
     update_verifier
 
 # USB
+PRODUCT_HAS_GADGET_HAL := true
+
 PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
     init.qcom.usb.sh

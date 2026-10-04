@@ -4,3 +4,26 @@ ro.vendor.qti.va_odm.support=1
 # SKU properties
 ro.product.property_source_order=odm,product,vendor,system_ext,system
 import /odm/etc/${ro.boot.hwc}_build.prop
+
+# Overrides of values set by the QTI components for the vendor partition
+aaudio.mmap_policy=1
+debug.sf.enable_gl_backpressure=0
+debug.sf.high_fps_early_gl_phase_offset_ns=-4000000
+debug.sf.high_fps_late_sf_phase_offset_ns=-4000000
+persist.sys.sf.color_mode=0
+persist.vendor.audio.bcl.enabled=false
+persist.vendor.audio.fluence.voicerec=true
+persist.vendor.audio.speaker.prot.enable=false
+persist.vendor.audio.vbat.enabled=false
+ro.surface_flinger.game_default_frame_rate_override=120
+ro.surface_flinger.max_frame_buffer_acquired_buffers=6
+ro.vendor.audio.sdk.fluencetype=fluence
+vendor.audio.adm.buffering.ms=6
+vendor.audio.feature.dynamic_ecns.enable=false
+vendor.audio.feature.kpi_optimize.enable=false
+vendor.audio.feature.power_mode.enable=false
+vendor.audio.hal.output.suspend.supported=false
+vendor.audio.offload.buffer.size.kb=256
+vendor.audio.offload.track.enable=false
+vendor.display.disable_hw_recovery_dump=1
+vendor.display.enable_async_powermode=1
