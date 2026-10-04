@@ -657,6 +657,7 @@ vendor/lib64/libclient2slpi.notifier.so
 vendor/lib64/libdisplayfeature.so
 vendor/lib64/libdisplayfeatureservice.so
 vendor/lib64/libmi-stc-HW-modulate.so
+vendor/lib64/libtinyxml.so
 
 # DPM
 vendor/bin/dpmQmiMgr

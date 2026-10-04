@@ -18,12 +18,14 @@ from extract_utils.main import (
 )
 
 namespace_imports = [
+    'device/qcom/common/vendor/telephony',
     'hardware/qcom/wlan/qcwcn',
     'hardware/xiaomi',
     'vendor/qcom/common/vendor/adreno/r',
     'vendor/qcom/common/vendor/display/5.4',
     'vendor/qcom/common/vendor/gps-legacy',
     'vendor/qcom/common/vendor/media/5.4',
+    'vendor/qcom/common/vendor/perf',
 ]
 
 
