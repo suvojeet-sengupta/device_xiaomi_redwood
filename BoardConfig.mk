@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2025 The LineageOS Project
+#           (C) 2026 Paranoid Android
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -10,6 +11,7 @@ KERNEL_PATH := device/xiaomi/redwood-kernel
 BOARD_VENDOR := xiaomi
 
 # A/B
+AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
     boot \
     dtbo \
@@ -36,45 +38,35 @@ TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a76
 
-# Audio
-AUDIO_FEATURE_ENABLED_EXTENDED_COMPRESS_FORMAT := true
-AUDIO_FEATURE_ENABLED_GKI := true
-AUDIO_FEATURE_ENABLED_PROXY_DEVICE := true
-AUDIO_FEATURE_ENABLED_SVA_MULTI_STAGE := true
-BOARD_SUPPORTS_OPENSOURCE_STHAL := true
-BOARD_SUPPORTS_SOUND_TRIGGER := true
-TARGET_PROVIDES_AUDIO_EXTNS := true
-
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth/include
 
 # Board
+TARGET_BOARD_PLATFORM := lahaina
 TARGET_BOOTLOADER_BOARD_NAME := redwood
-
-# Bootloader
 TARGET_NO_BOOTLOADER := true
+
+# Build
+BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
+
+# Camera
+TARGET_CAMERA_PACKAGE_NAME := com.android.camera
 
 # Display
 TARGET_SCREEN_DENSITY ?= 440
 
 # Filesystem
-TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/configs/config.fs
-
-# GPS
-BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := default
+TARGET_FS_CONFIG_GEN += $(DEVICE_PATH)/configs/config.fs
 
 # HIDL
-DEVICE_MATRIX_FILE := hardware/qcom-caf/common/compatibility_matrix.xml
-
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
-    hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml \
-    hardware/xiaomi/vintf/xiaomi_framework_compatibility_matrix.xml \
-
+    hardware/xiaomi/vintf/xiaomi_framework_compatibility_matrix.xml
 
 DEVICE_MANIFEST_FILE += \
     $(DEVICE_PATH)/hidl/manifest_lahaina.xml \
     $(DEVICE_PATH)/hidl/manifest_xiaomi.xml \
-    $(DEVICE_PATH)/hidl/c2_manifest_vendor.xml \
     $(if $(TARGET_NFC_SUPPORTED_SKUS),$(DEVICE_PATH)/hidl/manifest_no_nfc.xml,)
 
 ifneq ($(TARGET_NFC_SUPPORTED_SKUS),)
@@ -93,9 +85,6 @@ BOARD_RAMDISK_USE_LZ4 := true
 BOARD_BOOT_HEADER_VERSION := 3
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 
-TARGET_KERNEL_ADDITIONAL_FLAGS := TARGET_PRODUCT=$(PRODUCT_DEVICE)
-TARGET_KERNEL_NO_GCC := true
-
 BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM0
 BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom
 BOARD_KERNEL_CMDLINE += androidboot.memcg=1
@@ -111,12 +100,15 @@ BOARD_KERNEL_CMDLINE += iptable_raw.raw_before_defrag=1
 BOARD_KERNEL_CMDLINE += ip6table_raw.raw_before_defrag=1
 BOARD_KERNEL_CMDLINE += androidboot.init_fatal_reboot_target=recovery
 
-# Kernel Pre-compiled
-TARGET_NO_KERNEL_OVERRIDE := true
-TARGET_KERNEL_SOURCE := $(KERNEL_PATH)/kernel-headers
+# Kernel - Prebuilt
+TARGET_PREBUILT_KERNEL := $(KERNEL_PATH)/Image
+TARGET_BOARD_KERNEL_HEADERS := $(KERNEL_PATH)/kernel-headers
 BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_PATH)/dtbo.img
 BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_PATH)/dtb
 BOARD_MKBOOTIMG_ARGS += --dtb $(BOARD_PREBUILT_DTBIMAGE_DIR)/01_dtbdump_Qualcomm_Technologies,_Inc._Yupik_SoC.dtb
+
+# OTA
+TARGET_OTA_ASSERT_DEVICE := redwood
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
@@ -139,7 +131,8 @@ BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
 
--include vendor/lineage/config/BoardConfigReservedSize.mk
+BOARD_PRODUCTIMAGE_PARTITION_RESERVED_SIZE := 104857600
+BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 104857600
 BOARD_SYSTEM_EXTIMAGE_PARTITION_RESERVED_SIZE := 104857600
 BOARD_VENDORIMAGE_PARTITION_RESERVED_SIZE := 104857600
 
@@ -156,8 +149,8 @@ TARGET_USERIMAGES_SPARSE_F2FS_DISABLED := true
 # Firmware
 -include vendor/xiaomi/redwood-firmware/config.mk
 
-# Platform
-TARGET_BOARD_PLATFORM := lahaina
+# Power
+TARGET_POWER_FEATURE_EXT_LIB := libpowerfeature_ext_redwood
 
 # Properties
 TARGET_ODM_PROP += $(DEVICE_PATH)/configs/props/odm.prop
@@ -165,9 +158,6 @@ TARGET_PRODUCT_PROP += $(DEVICE_PATH)/configs/props/product.prop
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/configs/props/system.prop
 TARGET_SYSTEM_EXT_PROP += $(DEVICE_PATH)/configs/props/system_ext.prop
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/configs/props/vendor.prop
-
-# QCOM
-BOARD_USES_QCOM_HARDWARE := true
 
 # Recovery
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
@@ -177,23 +167,20 @@ TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
-# RIL
-ENABLE_VENDOR_RIL_SERVICE := true
-
 # Security patch level
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
 # SELinux
-include device/lineage/sepolicy/libion/sepolicy.mk
-include device/custom/sepolicy/libperfmgr/sepolicy.mk
-include device/qcom/sepolicy_vndr/SEPolicy.mk
+include vendor/aospa/sepolicy/libion/sepolicy.mk
 
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
 SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 
-# SurfaceFlinger
-TARGET_USE_AOSP_SURFACEFLINGER := true
+# UFS
+SOONG_CONFIG_NAMESPACES += ufsbsg
+SOONG_CONFIG_ufsbsg += ufsframework
+SOONG_CONFIG_ufsbsg_ufsframework := bsg
 
 # Verified Boot
 BOARD_AVB_ENABLE := true
@@ -210,24 +197,12 @@ BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 1
 BOARD_MOVE_GSI_AVB_KEYS_TO_VENDOR_BOOT := true
 
 # WiFi
-BOARD_WLAN_DEVICE := qcwcn
-BOARD_HOSTAPD_DRIVER := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
-BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 CONFIG_ACS := true
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB_EVENT := "ON"
-CONFIG_IEEE80211AC := true
 QC_WIFI_HIDL_FEATURE_DUAL_AP := true
 WIFI_DRIVER_DEFAULT := wlan
-WIFI_DRIVER_STATE_CTRL_PARAM := "/dev/wlan"
-WIFI_DRIVER_STATE_OFF := "OFF"
-WIFI_DRIVER_STATE_ON := "ON"
 WIFI_FEATURE_HOSTAPD_11AX := true
 WIFI_HIDL_FEATURE_AWARE := true
 WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
-WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
-WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # Inherit proprietary blobs
 include vendor/xiaomi/redwood/BoardConfigVendor.mk

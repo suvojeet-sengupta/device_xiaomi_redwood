@@ -36,10 +36,12 @@
 # Init
 /(vendor|system/vendor)/bin/init\.lahaina\.perf\.sh                       u:object_r:vendor_qti_init_shell_exec:s0
 
+# IR
+/dev/lirc[0-9]+                                                           u:object_r:lirc_device:s0
+/vendor/bin/hw/android\.hardware\.ir-service\.xiaomi                      u:object_r:hal_ir_default_exec:s0
+
 # Power
-/data/vendor/powerhal(/.*)?                                        u:object_r:powerhal_vendor_data_file:s0 
 /dev/xiaomi-touch                                                         u:object_r:vendor_touchfeature_device:s0
-/vendor/bin/hw/android\.hardware\.power-service\.lineage-libperfmgr  u:object_r:hal_power_default_exec:s0
 
 # Sensors
 /sys/bus/iio/devices                                                      u:object_r:vendor_sysfs_iio:s0

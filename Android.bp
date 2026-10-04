@@ -1,16 +1,16 @@
 //
 // Copyright (C) 2025 The LineageOS Project
+//           (C) 2026 Paranoid Android
+//
 // SPDX-License-Identifier: Apache-2.0
 //
 
-soong_namespace {
-    imports: [
-        "hardware/xiaomi",
-        "hardware/google/interfaces",
-        "hardware/google/pixel/pixelstats",
-        "hardware/google/pixel/power-libperfmgr",
-        "hardware/lineage/interfaces/power-libperfmgr",
-    ],
+// Prebuilt kernel headers from TARGET_BOARD_KERNEL_HEADERS, for the
+// QTI HALs that expect a kernel source tree to provide them.
+kernel_headers {
+    name: "qti_kernel_headers",
+    vendor_available: true,
+    recovery_available: true,
 }
 
 install_symlink {

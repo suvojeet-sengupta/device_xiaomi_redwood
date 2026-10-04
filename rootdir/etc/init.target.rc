@@ -120,6 +120,9 @@ on post-fs-data
     mkdir /data/vendor/audio/ultrasound 0770 audioserver audio
 
 on early-boot
+    # WLAN enable delay, must be set before wpss_boot (init.vendor.wlan.rc)
+    write /sys/kernel/icnss/wlan_en_delay 1000
+
     # Enable WLAN cold boot calibration
     write /sys/devices/platform/soc/b0000000.qcom,cnss-qca6490/fs_ready 1
 

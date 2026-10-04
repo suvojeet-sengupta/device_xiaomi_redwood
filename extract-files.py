@@ -18,15 +18,15 @@ from extract_utils.main import (
 )
 
 namespace_imports = [
-    'device/xiaomi/redwood',
-    'hardware/qcom-caf/common/libqti-perfd-client',
-    'hardware/qcom-caf/sm8350',
-    'hardware/qcom-caf/wlan',
+    'hardware/qcom/display',
+    'hardware/qcom/display/gralloc',
+    'hardware/qcom/display/libdebug',
+    'hardware/qcom/wlan/qcwcn',
     'hardware/xiaomi',
-    'vendor/qcom/opensource/commonsys/display',
-    'vendor/qcom/opensource/commonsys-intf/display',
-    'vendor/qcom/opensource/dataservices',
-    'vendor/qcom/opensource/display',
+    'vendor/qcom/common/vendor/adreno/r',
+    'vendor/qcom/common/vendor/display/5.4',
+    'vendor/qcom/common/vendor/gps-legacy',
+    'vendor/qcom/common/vendor/media/5.4',
 ]
 
 
@@ -88,9 +88,9 @@ blob_fixups: blob_fixups_user_type = {
         .clear_symbol_version('remote_handle_open'),
     'vendor/lib64/libsensor_cal_v2.so': blob_fixup()
         .add_needed('libjsoncpp_shim.so'),
-    ('vendor/lib/hw/audio.primary.lahaina.so', 'vendor/lib/libaudioroute_ext.so'): blob_fixup()
+    ('vendor/lib/hw/audio.primary.lahaina.so', 'vendor/lib/hw/sound_trigger.primary.lahaina.so', 'vendor/lib/libaudioroute_ext.so'): blob_fixup()
         .replace_needed('libaudioroute.so', 'libaudioroute-v34.so'),
-    ('vendor/lib64/libdpps.so', 'vendor/lib64/libsnapdragoncolor-manager.so', 'vendor/lib64/libaudiocloudctrl.so'): blob_fixup()
+    'vendor/lib64/libaudiocloudctrl.so': blob_fixup()
         .replace_needed('libtinyxml2.so', 'libtinyxml2-v34.so'),
 }  # fmt: skip
 
