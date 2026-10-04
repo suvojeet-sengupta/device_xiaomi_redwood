@@ -39,18 +39,17 @@ is upstream AOSPA's lahaina platform manifest
 copy still points at the older `vauxite` branches, which don't match the
 `vendor/qcom/common` blobs.
 
-PenguinOS also needs two fixes on top of its manifest until it picks them
-up. Apply them after every `repo sync`, from the root of the source tree:
+`device/qcom/common` comes from PenguinOS's own fork, since AOSPA's now
+expects a newer CLO QSSI sepolicy than PenguinOS pins and still references
+the `hub_app` domain PenguinOS dropped.
+
+PenguinOS's `vendor/aospa` also lacks the `vendor.qti.hardware.perf` HIDL
+interfaces that the perf component needs. Until it picks them up, apply
+AOSPA's commit after every `repo sync`, from the root of the source tree:
 
 ```bash
-# vendor/aospa lacks the vendor.qti.hardware.perf HIDL interfaces that the
-# perf component needs
 git -C vendor/aospa fetch https://github.com/AOSPA/android_vendor_aospa 06349a2e34feb922c310a710bee50c66a8c2223a
 git -C vendor/aospa cherry-pick FETCH_HEAD
-
-# device/qcom/common still references hub_app, which PenguinOS dropped
-git -C device/qcom/common fetch https://github.com/Project-PenguinOS/device_qcom_common 353b5ddbfeaf091b6a16bac3c553df59e9bafdbd
-git -C device/qcom/common cherry-pick FETCH_HEAD
 ```
 
 ```xml
@@ -63,6 +62,12 @@ git -C device/qcom/common cherry-pick FETCH_HEAD
   <project path="hardware/qcom/media" name="AOSPA/android_hardware_qcom_media" remote="aospa" revision="calcite-888" />
   <remove-project name="AOSPA/android_hardware_qcom_thermal" />
   <project path="vendor/qcom/opensource/thermal-hal" name="AOSPA/android_hardware_qcom_thermal" remote="aospa" revision="calcite-legacy" />
+
+  <!-- PenguinOS qcom common: matches the pinned CLO QSSI sepolicy -->
+  <remove-project name="AOSPA/android_device_qcom_common" />
+  <project path="device/qcom/common" name="Project-PenguinOS/device_qcom_common" remote="penguin" revision="celerity">
+    <linkfile dest="vendor/qcom/build/tasks/generate_extra_images.mk" src="generate_extra_images.mk"/>
+  </project>
 
   <!-- redwood -->
   <project path="device/xiaomi/redwood" name="suvojeet-sengupta/device_xiaomi_redwood" remote="github" revision="clo" />
