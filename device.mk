@@ -11,8 +11,6 @@ TARGET_BOARD_PLATFORM := lahaina
 # NFC
 TARGET_NFC_SUPPORTED_SKUS := redwood
 
-TARGET_SUPPORTS_OMX_SERVICE := false
-
 # Enable virtual A/B OTA
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
 
