@@ -34,19 +34,31 @@ AOSPA `device/qcom/common` QTI components, so the blobs those components
 already provide are not listed in `proprietary-files.txt`.
 
 Add the following to `.repo/local_manifests/redwood.xml`. The first block
-is AOSPA's lahaina platform manifest
-(`vendor/aospa/products/platforms/lahaina.xml`).
+is upstream AOSPA's lahaina platform manifest
+(`vendor/aospa/products/platforms/lahaina.xml` on `calcite`); PenguinOS's
+copy still points at the older `vauxite` branches, which don't match the
+`vendor/qcom/common` blobs.
+
+PenguinOS's `vendor/aospa` also lacks the `vendor.qti.hardware.perf` HIDL
+interfaces that the perf component needs. Until it picks them up, apply
+AOSPA's commit on top of it:
+
+```bash
+cd vendor/aospa
+git fetch https://github.com/AOSPA/android_vendor_aospa 06349a2e34feb922c310a710bee50c66a8c2223a
+git cherry-pick FETCH_HEAD
+```
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
   <!-- lahaina platform -->
-  <project path="vendor/qcom/opensource/audio-hal/primary-hal" name="AOSPA/android_hardware_qcom_audio" remote="aospa" revision="vauxite-888" />
-  <project path="hardware/qcom/display" name="AOSPA/android_hardware_qcom_display" remote="aospa" revision="vauxite-888" />
-  <project path="hardware/qcom/gps" name="AOSPA/android_hardware_qcom_gps" remote="aospa" revision="vauxite-legacy-component" />
-  <project path="hardware/qcom/media" name="AOSPA/android_hardware_qcom_media" remote="aospa" revision="vauxite-888" />
+  <project path="vendor/qcom/opensource/audio-hal/primary-hal" name="AOSPA/android_hardware_qcom_audio" remote="aospa" revision="calcite-888" />
+  <project path="hardware/qcom/display" name="AOSPA/android_hardware_qcom_display" remote="aospa" revision="calcite-888" />
+  <project path="hardware/qcom/gps" name="AOSPA/android_hardware_qcom_gps" remote="aospa" revision="calcite-legacy-component" />
+  <project path="hardware/qcom/media" name="AOSPA/android_hardware_qcom_media" remote="aospa" revision="calcite-888" />
   <remove-project name="AOSPA/android_hardware_qcom_thermal" />
-  <project path="vendor/qcom/opensource/thermal-hal" name="AOSPA/android_hardware_qcom_thermal" remote="aospa" revision="vauxite-legacy" />
+  <project path="vendor/qcom/opensource/thermal-hal" name="AOSPA/android_hardware_qcom_thermal" remote="aospa" revision="calcite-legacy" />
 
   <!-- redwood -->
   <project path="device/xiaomi/redwood" name="suvojeet-sengupta/device_xiaomi_redwood" remote="github" revision="clo" />

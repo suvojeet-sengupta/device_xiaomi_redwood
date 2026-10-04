@@ -18,9 +18,6 @@ from extract_utils.main import (
 )
 
 namespace_imports = [
-    'hardware/qcom/display',
-    'hardware/qcom/display/gralloc',
-    'hardware/qcom/display/libdebug',
     'hardware/qcom/wlan/qcwcn',
     'hardware/xiaomi',
     'vendor/qcom/common/vendor/adreno/r',
