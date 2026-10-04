@@ -1,0 +1,15 @@
+#
+# Copyright (C) 2026 Paranoid Android
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+on init
+    start redwood-debuglog
+
+service redwood-debuglog /system/bin/sh /system_ext/bin/redwood-debuglog.sh
+    user root
+    group root log readproc
+    oneshot
+    disabled
+    seclabel u:r:su:s0
