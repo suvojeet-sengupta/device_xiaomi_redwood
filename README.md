@@ -39,14 +39,18 @@ is upstream AOSPA's lahaina platform manifest
 copy still points at the older `vauxite` branches, which don't match the
 `vendor/qcom/common` blobs.
 
-PenguinOS's `vendor/aospa` also lacks the `vendor.qti.hardware.perf` HIDL
-interfaces that the perf component needs. Until it picks them up, apply
-AOSPA's commit on top of it:
+PenguinOS also needs two fixes on top of its manifest until it picks them
+up. Apply them after every `repo sync`, from the root of the source tree:
 
 ```bash
-cd vendor/aospa
-git fetch https://github.com/AOSPA/android_vendor_aospa 06349a2e34feb922c310a710bee50c66a8c2223a
-git cherry-pick FETCH_HEAD
+# vendor/aospa lacks the vendor.qti.hardware.perf HIDL interfaces that the
+# perf component needs
+git -C vendor/aospa fetch https://github.com/AOSPA/android_vendor_aospa 06349a2e34feb922c310a710bee50c66a8c2223a
+git -C vendor/aospa cherry-pick FETCH_HEAD
+
+# device/qcom/common still references hub_app, which PenguinOS dropped
+git -C device/qcom/common fetch https://github.com/Project-PenguinOS/device_qcom_common 353b5ddbfeaf091b6a16bac3c553df59e9bafdbd
+git -C device/qcom/common cherry-pick FETCH_HEAD
 ```
 
 ```xml
