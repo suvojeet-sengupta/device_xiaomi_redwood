@@ -622,6 +622,11 @@
         <item>com.google.android.gms/com.google.android.gms.nearby.discovery.service.DiscoveryService</item>
     </string-array>
 
+    <!-- Off-screen gestures: the goodix driver reports a double tap as
+         KEY_WAKEUP. power-feature turns the gesture on in the driver. -->
+    <integer name="config_doubleTapKeyCode">143</integer>
+    <integer name="config_doubleTapDefault">1</integer>
+
     <!-- The fingerprint HAL is AIDL and gets picked up from VINTF. Listing it
          here makes system_server look for a HIDL HAL that doesn't exist and
          retry forever. -->
