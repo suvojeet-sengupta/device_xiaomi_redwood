@@ -1,5 +1,5 @@
 From 98f6e5d082c524991f225b40536bdd84df9eb7e5 Mon Sep 17 00:00:00 2001
-From: suvojeet-sengupta <devjit.neogi@gmail.com>
+From: suvojeet-sengupta <suvojitsengupta21@gmail.com>
 Date: Mon, 5 Oct 2026 10:59:57 +0000
 Subject: [PATCH 4/4] LoopbackEventHandler: Handle a missing ring buffer
 

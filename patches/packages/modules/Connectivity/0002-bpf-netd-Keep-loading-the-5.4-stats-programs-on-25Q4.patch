@@ -1,5 +1,5 @@
 From 1f1f5429fe68a64159cfe3070b21ef8489925935 Mon Sep 17 00:00:00 2001
-From: suvojeet-sengupta <devjit.neogi@gmail.com>
+From: suvojeet-sengupta <suvojitsengupta21@gmail.com>
 Date: Mon, 5 Oct 2026 08:32:47 +0000
 Subject: [PATCH 2/4] bpf: netd: Keep loading the 5.4 stats programs on 25Q4+
 

@@ -1,5 +1,5 @@
 From 8750b086f25d29640a0f965186f693420662eea8 Mon Sep 17 00:00:00 2001
-From: suvojeet-sengupta <devjit.neogi@gmail.com>
+From: suvojeet-sengupta <suvojitsengupta21@gmail.com>
 Date: Mon, 5 Oct 2026 13:12:18 +0000
 Subject: [PATCH] lmkd: Keep using the in-kernel interface without psi
 
