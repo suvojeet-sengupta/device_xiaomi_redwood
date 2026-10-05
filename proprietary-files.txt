@@ -98,23 +98,16 @@ vendor/lib64/soundfx/libqcreverb.so
 vendor/lib64/soundfx/libqcvirt.so
 
 # Audio Hardware
-vendor/lib/hw/audio.primary.lahaina.so;MODULE_SUFFIX=_redwood;OVERRIDES=audio.primary.lahaina
 vendor/lib/hw/sound_trigger.primary.lahaina.so
-vendor/lib/liba2dpoffload.so;MODULE_SUFFIX=_redwood;OVERRIDES=liba2dpoffload
 vendor/lib/libadm.so
 vendor/lib/libaudio_log_utils.so
 vendor/lib/libaudiocloudctrl.so
 vendor/lib/libaudioparsers.so
 vendor/lib/libaudioroute_ext.so
-vendor/lib/libbatterylistener.so;MODULE_SUFFIX=_redwood;OVERRIDES=libbatterylistener
-vendor/lib/libhdmiedid.so;MODULE_SUFFIX=_redwood;OVERRIDES=libhdmiedid
 vendor/lib/libhdmipassthru.so;MODULE_SUFFIX=_redwood;OVERRIDES=libhdmipassthru
-vendor/lib/libhfp.so;MODULE_SUFFIX=_redwood;OVERRIDES=libhfp
 vendor/lib/libmmhardware.so
 vendor/lib/libqtigef.so
 vendor/lib/libresampler.so
-vendor/lib/libsndmonitor.so;MODULE_SUFFIX=_redwood;OVERRIDES=libsndmonitor
-vendor/lib/libssrec.so;MODULE_SUFFIX=_redwood;OVERRIDES=libssrec
 vendor/lib/libvideoNS.so;DISABLE_CHECKELF
 vendor/lib/vndk/libxlog.so
 
