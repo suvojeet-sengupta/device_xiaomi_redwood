@@ -29,10 +29,11 @@ android_app_import {
 }
 
 // The calcite libimsmedia_jni fails JNI_OnLoad with this ImsService, use
-// the one it shipped with.
+// the one it shipped with. It keeps its own name so it doesn't clash with
+// the calcite one, the symlink below gives it the name the app loads.
 cc_prebuilt_library_shared {
     name: "ims_hidl_libimsmedia_jni",
-    stem: "libimsmedia_jni",
+    stem: "libimsmedia_jni_a16",
     srcs: ["libimsmedia_jni.so"],
     compile_multilib: "64",
     strip: {
@@ -47,13 +48,13 @@ cc_prebuilt_library_shared {
         "libnativehelper",
         "libutils",
     ],
+    check_elf_files: false,
     system_ext_specific: true,
-    overrides: ["libimsmedia_jni"],
 }
 
 install_symlink {
     name: "ims_hidl_libimsmedia_jni_symlink",
     system_ext_specific: true,
     installed_location: "priv-app/ims_hidl/lib/arm64/libimsmedia_jni.so",
-    symlink_target: "/system_ext/lib64/libimsmedia_jni.so",
+    symlink_target: "/system_ext/lib64/libimsmedia_jni_a16.so",
 }
