@@ -50,6 +50,8 @@ PenguinOS also needs a few source patches for redwood, kept in `patches/`:
 - `packages/modules/Connectivity`: redwood ships a 5.4 kernel, but Android
   17's network bpf programs require 5.10. The bpfloader refuses to run and
   netd can't find its stats programs, and init reboots the device either way.
+- `system/memory/lmkd`: the kernel kills with Simple LMK and has no psi, so
+  lmkd has to stay on the in-kernel interface instead of exiting.
 
 `vendorsetup.sh` applies them whenever `build/envsetup.sh` (and so
 `rom-build.sh`) runs, skipping the ones that are already applied, so they
