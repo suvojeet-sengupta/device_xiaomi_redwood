@@ -423,6 +423,7 @@ PRODUCT_SOONG_NAMESPACES += \
 
 # Telephony
 PRODUCT_PACKAGES += \
+    ims_hidl \
     qcrilNrDb_vendor \
     xiaomi-telephony-stub
 

@@ -1,0 +1,33 @@
+//
+// Copyright (C) 2026 Paranoid Android
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The redwood qcril only serves IImsRadio over HIDL, but the ImsService in
+// the calcite telephony component only talks to the AIDL one, so MMTEL never
+// becomes available and there's no VoLTE. Ship the last one that still falls
+// back to HIDL, from LA.QISI.16.0.r2-00900-qssi.0 (ThankYouMario's
+// proprietary_vendor_qcom_common@846afd36fe).
+android_app_import {
+    name: "ims_hidl",
+    apk: "ims.apk",
+    certificate: "platform",
+    dex_preopt: {
+        enabled: false,
+    },
+    privileged: true,
+    system_ext_specific: true,
+    overrides: [
+        "ims",
+        "system_ext_priv-app_ims_lib_arm64_libimsmedia_jni_so",
+    ],
+    required: ["ims_hidl_libimsmedia_jni_symlink"],
+}
+
+install_symlink {
+    name: "ims_hidl_libimsmedia_jni_symlink",
+    system_ext_specific: true,
+    installed_location: "priv-app/ims_hidl/lib/arm64/libimsmedia_jni.so",
+    symlink_target: "/system_ext/lib64/libimsmedia_jni.so",
+}
