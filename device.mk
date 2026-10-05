@@ -125,9 +125,11 @@ PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
 # Bluetooth
+# No android.hardware.bluetooth.audio-impl: the QTI audio service doesn't
+# register it, and once it's declared in the VINTF the stack waits for it
+# instead of using vendor.qti.hardware.bluetooth_audio@2.1.
 PRODUCT_PACKAGES += \
-    audio.bluetooth.default \
-    android.hardware.bluetooth.audio-impl
+    audio.bluetooth.default
 
 # ION
 $(call soong_config_set_bool,libion,legacy_impl,true)
