@@ -163,14 +163,6 @@ $(call soong_config_set,libcameraservice,ext_lib,libcameraservice_extension.xiao
 # DebugFS
 PRODUCT_SET_DEBUGFS_RESTRICTIONS := true
 
-# Debug (boot debugging, remove before release)
-PRODUCT_PACKAGES += \
-    init.redwood.debug.rc \
-    redwood-debuglog.sh
-
-PRODUCT_SYSTEM_PROPERTIES += \
-    service.adb.root=1
-
 # Device Settings
 PRODUCT_PACKAGES += \
     XiaomiParts
