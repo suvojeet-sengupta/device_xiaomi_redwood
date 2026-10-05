@@ -25,7 +25,7 @@ redwood_apply_patches() {
             continue
         fi
 
-        if git -C "$dir" -c user.name=redwood -c user.email=redwood@localhost \
+        if git -C "$dir" -c user.name=suvojeet-sengupta -c user.email=suvojitsengupta21@gmail.com \
                 am -q --3way "$patches/$patch" &>/dev/null; then
             echo "redwood: applied $patch" >&2
         else
