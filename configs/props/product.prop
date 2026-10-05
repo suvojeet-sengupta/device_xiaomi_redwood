@@ -16,3 +16,6 @@ ro.lmk.swap_free_low_percentage=100
 
 # Maintainer
 ro.aospa.maintainer=Suvojeet Sengupta
+
+# Hardware info
+ro.aospa.soc_name=Qualcomm Snapdragon 778G 5G

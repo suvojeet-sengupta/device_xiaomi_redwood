@@ -54,6 +54,8 @@ PenguinOS also needs a few source patches for redwood, kept in `patches/`:
   netd can't find its stats programs, and init reboots the device either way.
 - `system/memory/lmkd`: the kernel kills with Simple LMK and has no psi, so
   lmkd has to stay on the in-kernel interface instead of exiting.
+- `packages/apps/Settings`: About phone > Model lists SoC Model and Total
+  RAM, but PenguinOS never added their controllers, so both were blank.
 
 `vendorsetup.sh` applies them whenever `build/envsetup.sh` (and so
 `rom-build.sh`) runs, skipping the ones that are already applied, so they
