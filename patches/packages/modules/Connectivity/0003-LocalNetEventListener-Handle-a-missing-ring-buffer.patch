@@ -1,7 +1,7 @@
 From cd3648f598370a38731c3659b64e9f31ecd75e7d Mon Sep 17 00:00:00 2001
 From: suvojeet-sengupta <devjit.neogi@gmail.com>
 Date: Mon, 5 Oct 2026 10:05:14 +0000
-Subject: [PATCH 3/3] LocalNetEventListener: Handle a missing ring buffer
+Subject: [PATCH 3/4] LocalNetEventListener: Handle a missing ring buffer
 
 The local net note op ring buffer needs kernel 5.8+ and isn't loaded on
 older kernels, where constructing its wrapper aborts system_server.
