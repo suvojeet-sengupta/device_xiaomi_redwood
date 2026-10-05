@@ -10,7 +10,10 @@
 # ramoops doesn't survive the reset on this device, so the kernel log and
 # logcat are streamed to /metadata (ext4, data=journal, commit=1) as they
 # are produced. Whatever was logged up to a second before the device froze
-# or reset is kept. The last 5 boots are kept, boot0 is the newest.
+# or reset is kept. The last 2 boots are kept, boot0 is the newest.
+#
+# /metadata is small and also holds vold's keys and the OTA snapshot state,
+# so every log is capped: about 6 MB per boot, crash buffer included.
 #
 # Every few seconds the stacks of blocked tasks (sysrq-w) and of the
 # running CPUs (sysrq-l) are dumped to the kernel log. Anything that can
@@ -19,23 +22,32 @@
 BASE=/metadata/redwood-debug
 
 mkdir -p $BASE
-rm -rf $BASE/boot4
-for n in 3 2 1 0; do
-    [ -d $BASE/boot$n ] && mv $BASE/boot$n $BASE/boot$((n + 1))
-done
+rm -rf $BASE/boot1 $BASE/boot2 $BASE/boot3 $BASE/boot4
+[ -d $BASE/boot0 ] && mv $BASE/boot0 $BASE/boot1
 DIR=$BASE/boot0
 mkdir -p $DIR
 
 echo 1 > /proc/sys/kernel/sysrq
 echo on > /proc/sys/kernel/printk_devkmsg
 
-# Kernel log, the whole ring buffer and then everything new
-cat /dev/kmsg > $DIR/kmsg.txt 2>&1 &
+# Kernel log, the whole ring buffer and then everything new, up to 2 MB
+(cat /dev/kmsg | head -c 2097152 > $DIR/kmsg.txt) &
 
-# logcat, retried until logd is up
+# logcat, retried until logd is up. Rotated at 1 MB, 3 files at most.
+# The obscura lookups before systemReady and the boot animation flood the
+# log, so leave those out.
 (
     while true; do
-        logcat -b all -v threadtime >> $DIR/logcat.txt 2>&1
+        logcat -b main,system,events -v threadtime -f $DIR/logcat.txt -r 1024 -n 2 \
+            SystemServiceRegistry:S am_wtf:S BootAnimation:S
+        sleep 1
+    done
+) &
+
+# Crashes only, small but the most useful
+(
+    while true; do
+        logcat -b crash -v threadtime -f $DIR/crash.txt -r 512 -n 1
         sleep 1
     done
 ) &
