@@ -28,9 +28,9 @@ public class BypassChargeBootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String action = intent.getAction();
-        if (!Intent.ACTION_BOOT_COMPLETED.equals(action)
-                && !Intent.ACTION_LOCKED_BOOT_COMPLETED.equals(action)) {
+        // ChargeUtils uses credential encrypted shared preferences, which
+        // aren't available before the user is unlocked.
+        if (!Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             return;
         }
 
