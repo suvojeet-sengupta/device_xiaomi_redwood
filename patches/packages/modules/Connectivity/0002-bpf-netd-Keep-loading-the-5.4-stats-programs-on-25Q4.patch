@@ -1,7 +1,7 @@
-From cdbed9c14130549aac5d978021b01f597bcad237 Mon Sep 17 00:00:00 2001
+From 1f1f5429fe68a64159cfe3070b21ef8489925935 Mon Sep 17 00:00:00 2001
 From: suvojeet-sengupta <devjit.neogi@gmail.com>
 Date: Mon, 5 Oct 2026 08:32:47 +0000
-Subject: [PATCH 2/2] bpf: netd: Keep loading the 5.4 stats programs on 25Q4+
+Subject: [PATCH 2/3] bpf: netd: Keep loading the 5.4 stats programs on 25Q4+
 
 25Q4 dropped the 5.4 variant of the ingress/egress stats programs, so
 nothing gets loaded for them on 5.4 kernels and netd aborts on boot
