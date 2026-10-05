@@ -8,6 +8,8 @@ The Xiaomi Poco X5 Pro 5G/Redmi Note 12 Pro Speed (codenamed _"redwood"_) is a m
 
 It was released in February 2023.
 
+Maintained by Suvojeet Sengupta ([@suvojeet-sengupta](https://github.com/suvojeet-sengupta)).
+
 ## Device specifications
 
 Basic   | Spec Sheet
