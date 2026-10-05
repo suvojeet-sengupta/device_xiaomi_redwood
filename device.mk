@@ -468,6 +468,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     firmware_WCNSS_qcom_cfg.ini_symlink
 
+# Wireless regulatory database, requested by cfg80211 early during boot.
+# Without it ueventd keeps the firmware request pending until boot
+# completes, which stalls the kernel worker other allocations wait on.
+PRODUCT_COPY_FILES += \
+    external/wireless-regdb/regulatory.db:$(TARGET_COPY_OUT_VENDOR)/firmware/regulatory.db \
+    external/wireless-regdb/regulatory.db.p7s:$(TARGET_COPY_OUT_VENDOR)/firmware/regulatory.db.p7s
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
