@@ -52,6 +52,15 @@ git -C vendor/aospa fetch https://github.com/AOSPA/android_vendor_aospa 06349a2e
 git -C vendor/aospa cherry-pick FETCH_HEAD
 ```
 
+redwood ships a 5.4 kernel, but the bpfloader in Android 17 refuses to run
+on anything older than 5.10 and init then reboots the device. Apply
+LineageOS's commit that relaxes the check to a warning as well:
+
+```bash
+git -C packages/modules/Connectivity fetch https://github.com/LineageOS/android_packages_modules_Connectivity 8e92e094e9897249d7bf68041c84d2499d49f4e3
+git -C packages/modules/Connectivity cherry-pick FETCH_HEAD
+```
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
