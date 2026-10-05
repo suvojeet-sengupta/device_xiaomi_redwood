@@ -19,11 +19,8 @@ package org.lineageos.settings.charge;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.BatteryManager;
 import android.util.Log;
-
-import androidx.preference.PreferenceManager;
 
 import org.lineageos.settings.R;
 import org.lineageos.settings.utils.FileUtils;
@@ -39,14 +36,10 @@ public class ChargeUtils {
     private static final int MAX_BATTERY_TEMP = 450;
     private static final int MIN_BATTERY_CAPACITY = 20;
 
-    private static final String PREF_BYPASS_CHARGE = "bypass_charge";
-
     private final Context context;
-    private final SharedPreferences sharedPrefs;
 
     public ChargeUtils(Context context) {
         this.context = context;
-        this.sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public boolean isBypassChargeEnabled() {
@@ -63,9 +56,7 @@ public class ChargeUtils {
             }
         }
 
-        if (FileUtils.writeLine(BYPASS_CHARGE_NODE, enable ? "1" : "0")) {
-            sharedPrefs.edit().putBoolean(PREF_BYPASS_CHARGE, enable).apply();
-        } else {
+        if (!FileUtils.writeLine(BYPASS_CHARGE_NODE, enable ? "1" : "0")) {
             Log.e(TAG, "Failed to update bypass charge state");
         }
     }
