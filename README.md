@@ -58,6 +58,9 @@ PenguinOS also needs a few source patches for redwood, kept in `patches/`:
   drops the NR secondary cell every few seconds, so on 5G NSA the status bar
   kept falling back to 4G. With `ro.telephony.sticky_nr_anchor` NR stays
   available while camped on the LTE cell it was seen on.
+- `frameworks/base`: QTI's SystemUI shows the LTE anchor's icon for the NR NSA
+  override unless the modem reports a QTI NR icon type, which redwood's never
+  does. `config_nrNsaIconFromDisplayInfo` shows 5G there instead.
 - `packages/apps/Settings`: About phone > Model lists SoC Model and Total
   RAM, but PenguinOS never added their controllers, so both were blank.
 - `vendor/qcom/opensource/power`: ADPF hint sessions boost their threads
