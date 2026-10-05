@@ -60,6 +60,12 @@ PenguinOS also needs a few source patches for redwood, kept in `patches/`:
   available while camped on the LTE cell it was seen on.
 - `packages/apps/Settings`: About phone > Model lists SoC Model and Total
   RAM, but PenguinOS never added their controllers, so both were blank.
+- `vendor/qcom/opensource/power`: ADPF hint sessions boost their threads
+  through a WALT node only 5.10 and newer kernels have, every request failed
+  and flooded the log. Skip it there, and log the per frame calls only when
+  debugging.
+- `device/qcom/common`: make `ro.vendor.qspm.enable` overridable. QSPM needs
+  `ISnapdragonServices`, which redwood's vendor doesn't have.
 
 `vendorsetup.sh` applies them whenever `build/envsetup.sh` (and so
 `rom-build.sh`) runs, skipping the ones that are already applied, so they
@@ -104,8 +110,12 @@ platform, shared, media, networkstack, sdk_sandbox, bluetooth, nfc and one key
 per APEX, with its payload `.pem`):
 
 ```bash
-./rom-build.sh redwood -s ~/.android-certs
+./rom-build.sh redwood -t user -s ~/.android-certs
 ```
+
+Moving between test keys and release keys needs a data wipe, moving between
+`userdebug` and `user` with the same keys doesn't. Keep a copy of the keys off
+the build server, a build signed with other keys can't be flashed over it.
 
 `vendor/xiaomi/redwood` must be re-extracted whenever `proprietary-files.txt`
 changes, from a dump of the stock HyperOS firmware:
