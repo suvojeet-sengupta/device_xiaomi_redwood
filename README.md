@@ -89,6 +89,14 @@ repo sync --current-branch --no-tags -j4
 ./rom-build.sh redwood
 ```
 
+For a release signed build, pass the folder with the signing keys (releasekey,
+platform, shared, media, networkstack, sdk_sandbox, bluetooth, nfc and one key
+per APEX, with its payload `.pem`):
+
+```bash
+./rom-build.sh redwood -s ~/.android-certs
+```
+
 `vendor/xiaomi/redwood` must be re-extracted whenever `proprietary-files.txt`
 changes, from a dump of the stock HyperOS firmware:
 
