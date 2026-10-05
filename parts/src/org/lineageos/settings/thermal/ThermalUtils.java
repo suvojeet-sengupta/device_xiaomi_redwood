@@ -78,8 +78,10 @@ public final class ThermalUtils {
         String value = mSharedPrefs.getString(THERMAL_CONTROL, null);
 
         if (value == null || value.isEmpty()) {
-            value = THERMAL_BENCHMARK + ":" + THERMAL_CAMERA + ":" +
-                    THERMAL_DIALER + ":" + THERMAL_GAMING;
+            value = THERMAL_BENCHMARK + ":" +
+                    THERMAL_CAMERA + "com.android.camera," + ":" +
+                    THERMAL_DIALER + "com.android.dialer,com.google.android.dialer," + ":" +
+                    THERMAL_GAMING;
             writeValue(value);
         }
         return value;
