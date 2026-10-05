@@ -207,6 +207,10 @@ ro.vendor.se.type=eSE,HCE,UICC
 ro.vendor.extension_library=libqti-perfd-client.so
 ro.vendor.perf.scroll_opt=true
 
+# QSPM is reached through ISnapdragonServices, which this vendor doesn't
+# have, and ActivityTrigger's handler would wait for it forever
+ro.vendor.qspm.enable=false
+
 # Radio
 keyguard.no_require_sim=true
 persist.radio.multisim.config=dsds
