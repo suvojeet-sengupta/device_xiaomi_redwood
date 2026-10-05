@@ -88,9 +88,6 @@ vendor/etc/audio/sku_yupik/sound_trigger_mixer_paths_yupikidp.xml
 vendor/etc/audio/sku_yupik/sound_trigger_platform_info.xml
 vendor/etc/audio_tuning_mixer.txt
 
-# Audio firmware
-vendor/firmware/aw882xx_acf.bin
-
 # Audio FX modules
 vendor/lib/soundfx/libasphere.so
 vendor/lib/soundfx/libqcbassboost.so
