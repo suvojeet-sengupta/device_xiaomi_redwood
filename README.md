@@ -43,23 +43,17 @@ copy still points at the older `vauxite` branches, which don't match the
 expects a newer CLO QSSI sepolicy than PenguinOS pins and still references
 the `hub_app` domain PenguinOS dropped.
 
-PenguinOS's `vendor/aospa` also lacks the `vendor.qti.hardware.perf` HIDL
-interfaces that the perf component needs. Until it picks them up, apply
-AOSPA's commit after every `repo sync`, from the root of the source tree:
+PenguinOS also needs a few source patches for redwood, kept in `patches/`:
 
-```bash
-git -C vendor/aospa fetch https://github.com/AOSPA/android_vendor_aospa 06349a2e34feb922c310a710bee50c66a8c2223a
-git -C vendor/aospa cherry-pick FETCH_HEAD
-```
+- `vendor/aospa`: AOSPA's `vendor.qti.hardware.perf` HIDL interfaces, which
+  the perf component needs.
+- `packages/modules/Connectivity`: redwood ships a 5.4 kernel, but Android
+  17's network bpf programs require 5.10. The bpfloader refuses to run and
+  netd can't find its stats programs, and init reboots the device either way.
 
-redwood ships a 5.4 kernel, but Android 17's network bpf programs require
-5.10: the bpfloader refuses to run and netd can't find its stats programs,
-and init reboots the device either way. Apply the patches in `patches/`
-as well:
-
-```bash
-git -C packages/modules/Connectivity am $PWD/device/xiaomi/redwood/patches/packages/modules/Connectivity/*.patch
-```
+`vendorsetup.sh` applies them whenever `build/envsetup.sh` (and so
+`rom-build.sh`) runs, skipping the ones that are already applied, so they
+survive a `repo sync`.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
