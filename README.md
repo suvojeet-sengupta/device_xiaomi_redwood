@@ -54,6 +54,10 @@ PenguinOS also needs a few source patches for redwood, kept in `patches/`:
   netd can't find its stats programs, and init reboots the device either way.
 - `system/memory/lmkd`: the kernel kills with Simple LMK and has no psi, so
   lmkd has to stay on the in-kernel interface instead of exiting.
+- `frameworks/opt/telephony`: the modem never reports EN-DC availability and
+  drops the NR secondary cell every few seconds, so on 5G NSA the status bar
+  kept falling back to 4G. With `ro.telephony.sticky_nr_anchor` NR stays
+  available while camped on the LTE cell it was seen on.
 - `packages/apps/Settings`: About phone > Model lists SoC Model and Total
   RAM, but PenguinOS never added their controllers, so both were blank.
 

@@ -17,5 +17,8 @@ ro.lmk.swap_free_low_percentage=100
 # Maintainer
 ro.aospa.maintainer=Suvojeet Sengupta
 
+# 5G NSA: the modem never reports EN-DC, keep NR on the cell it was seen on
+ro.telephony.sticky_nr_anchor=true
+
 # Hardware info
 ro.aospa.soc_name=Qualcomm Snapdragon 778G 5G
