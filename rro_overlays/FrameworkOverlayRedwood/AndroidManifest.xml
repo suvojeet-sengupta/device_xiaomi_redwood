@@ -7,6 +7,6 @@
     package="android.overlay.redwood">
     <overlay
         android:isStatic="true"
-        android:priority="200"
+        android:priority="600"
         android:targetPackage="android" />
 </manifest>
