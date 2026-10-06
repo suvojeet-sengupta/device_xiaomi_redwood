@@ -25,6 +25,7 @@ on property:ro.boot.product.hardware.sku=redwood
     enable secureelement-hal_1_2
 
 # loc_sys_service only talks to the AIDL location HAL, which this vendor
-# doesn't have, and would wait for it forever
-on property:init.svc.loc_sys_service=running
+# doesn't have, and would wait for it forever. It starts on early-boot;
+# vendor init can't trigger on its init.svc property.
+on boot
     stop loc_sys_service
