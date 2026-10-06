@@ -60,7 +60,9 @@ redwood also needs a few source patches, kept in `patches/` for both ROMs:
   available while camped on the LTE cell it was seen on.
 - `frameworks/av`: MIUI Camera sends AF modes and triggers to the fixed focus
   front camera, and the front video pipeline with stabilization stalls on
-  each tap to focus. cameraserver keeps AF off for fixed focus cameras.
+  each tap to focus. cameraserver keeps AF off for fixed focus cameras, and
+  ignores their AE regions on video streams, since tap to meter stalls the
+  30 fps stabilized pipeline too.
 - `frameworks/base`: QTI's SystemUI shows the LTE anchor's icon for the NR NSA
   override unless the modem reports a QTI NR icon type, which redwood's never
   does. `config_nrNsaIconFromDisplayInfo` shows 5G there instead.
