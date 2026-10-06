@@ -5,10 +5,20 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// Prebuilt kernel headers from TARGET_BOARD_KERNEL_HEADERS, for the
-// QTI HALs that expect a kernel source tree to provide them.
-kernel_headers {
+// UAPI headers generated from the kernel source, for the QTI HALs that
+// expect the kernel tree to provide them.
+cc_library_headers {
     name: "qti_kernel_headers",
+    arch: {
+        arm: {
+            generated_headers: ["qti_generate_kernel_headers_arm"],
+            export_generated_headers: ["qti_generate_kernel_headers_arm"],
+        },
+        arm64: {
+            generated_headers: ["qti_generate_kernel_headers_arm64"],
+            export_generated_headers: ["qti_generate_kernel_headers_arm64"],
+        },
+    },
     vendor_available: true,
     recovery_available: true,
 }
