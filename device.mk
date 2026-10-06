@@ -184,6 +184,12 @@ PRODUCT_VENDOR_PROPERTIES += \
 # Dolby
 $(call inherit-product-if-exists, hardware/dolby/dolby.mk)
 
+# WebView: AOSPA's GMS only has a 64 bit only WebView, which never gets a
+# 32 bit RELRO here, so ship the 32 and 64 bit one instead.
+ifneq ($(wildcard vendor/google/gms/proprietary/product/app/WebViewGoogle64),)
+$(call inherit-product, vendor/xiaomi/redwood/webview/webview.mk)
+endif
+
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey
