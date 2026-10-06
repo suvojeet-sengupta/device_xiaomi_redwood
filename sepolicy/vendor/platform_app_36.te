@@ -9,3 +9,6 @@ hal_client_domain(platform_app_36, hal_dms)
 hal_client_domain(platform_app_36, hal_dvs)
 allow platform_app_36 hal_dms_hwservice:hwservice_manager find;
 binder_call(hal_dms_default, platform_app_36)
+
+# DaxService looks for an AIDL DMS before falling back to the HIDL one we ship
+dontaudit platform_app_36 default_android_service:service_manager find;
