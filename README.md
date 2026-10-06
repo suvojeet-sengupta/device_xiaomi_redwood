@@ -45,7 +45,7 @@ copy still points at the older `vauxite` branches, which don't match the
 expects a newer CLO QSSI sepolicy than PenguinOS pins and still references
 the `hub_app` domain PenguinOS dropped.
 
-PenguinOS also needs a few source patches for redwood, kept in `patches/`:
+redwood also needs a few source patches, kept in `patches/` for both ROMs:
 
 - `vendor/aospa`: AOSPA's `vendor.qti.hardware.perf` HIDL interfaces, which
   the perf component needs.
@@ -54,9 +54,6 @@ PenguinOS also needs a few source patches for redwood, kept in `patches/`:
   netd can't find its stats programs, and init reboots the device either way.
 - `system/memory/lmkd`: the kernel kills with Simple LMK and has no psi, so
   lmkd has to stay on the in-kernel interface instead of exiting.
-- `system/memory/libmeminfo`: the 5.4 kernel has no GPU memory tracepoint, so
-  the gpuMem bpf map isn't what libmeminfo expects and system_server aborts
-  reading it at boot. PenguinOS already carries this; AOSPA doesn't.
 - `frameworks/opt/telephony`: the modem never reports EN-DC availability and
   drops the NR secondary cell every few seconds, so on 5G NSA the status bar
   kept falling back to 4G. With `ro.telephony.sticky_nr_anchor` NR stays
@@ -67,8 +64,6 @@ PenguinOS also needs a few source patches for redwood, kept in `patches/`:
 - `frameworks/base`: QTI's SystemUI shows the LTE anchor's icon for the NR NSA
   override unless the modem reports a QTI NR icon type, which redwood's never
   does. `config_nrNsaIconFromDisplayInfo` shows 5G there instead.
-- `packages/apps/Settings`: About phone > Model lists SoC Model and Total
-  RAM, but PenguinOS never added their controllers, so both were blank.
 - `vendor/qcom/opensource/power`: ADPF hint sessions boost their threads
   through a WALT node only 5.10 and newer kernels have, every request failed
   and flooded the log. Skip it there, and log the per frame calls only when
@@ -76,7 +71,24 @@ PenguinOS also needs a few source patches for redwood, kept in `patches/`:
 - `device/qcom/common`: make `ro.vendor.qspm.enable` overridable. QSPM needs
   `ISnapdragonServices`, which redwood's vendor doesn't have.
 
-`vendorsetup.sh` applies them whenever `build/envsetup.sh` (and so
+`patches-penguinos/` holds the ones only PenguinOS needs:
+
+- `packages/apps/Settings`: About phone > Model lists SoC Model and Total
+  RAM, but PenguinOS never added their controllers, so both were blank.
+
+and `patches-aospa/` the ones only AOSPA needs:
+
+- `system/memory/libmeminfo`: the 5.4 kernel has no GPU memory tracepoint, so
+  the gpuMem bpf map isn't what libmeminfo expects and system_server aborts
+  reading it at boot. PenguinOS already carries this.
+- `frameworks/base`, `frameworks/av`: PenguinOS's MIUI Camera support. MIUI
+  Camera builds StreamConfigurationMap through constructors AOSP doesn't
+  have, so without them it gets no picture sizes and closes.
+- `frameworks/base`: PropImitationHooks, which AOSPA dropped, so Play
+  Integrity can pass. The overlay ships a default certified build.
+
+`vendorsetup.sh` tells the ROMs apart by PenguinOS's
+`frameworks/base/core/res/res/values/custom_config.xml` and applies them whenever `build/envsetup.sh` (and so
 `rom-build.sh`) runs, skipping the ones that are already applied, so they
 survive a `repo sync`.
 
