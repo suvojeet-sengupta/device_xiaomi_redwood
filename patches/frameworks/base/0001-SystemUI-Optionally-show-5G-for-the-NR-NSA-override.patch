@@ -1,4 +1,4 @@
-From dfbafcfc68a4bc46e5b6d5d7c03026b47afe50d6 Mon Sep 17 00:00:00 2001
+From 857919be73e88ec1f8526b9909e027ffbe0dfe54 Mon Sep 17 00:00:00 2001
 From: suvojeet-sengupta <suvojitsengupta21@gmail.com>
 Date: Mon, 5 Oct 2026 21:49:21 +0000
 Subject: [PATCH] SystemUI: Optionally show 5G for the NR NSA override
@@ -8,23 +8,23 @@ is shown with the anchor network's icon, so devices whose modem never
 reports an NR icon type show 4G on 5G NSA networks. Add an overlayable
 config to show the override's 5G icon in that case.
 ---
- packages/SystemUI/res/values/aospa_config.xml            | 4 ++++
+ packages/SystemUI/res/values/nr_config.xml               | 6 ++++++
  .../mobile/domain/interactor/MobileIconInteractor.kt     | 9 ++++++++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ 2 files changed, 14 insertions(+), 1 deletion(-)
+ create mode 100644 packages/SystemUI/res/values/nr_config.xml
 
-diff --git a/packages/SystemUI/res/values/aospa_config.xml b/packages/SystemUI/res/values/aospa_config.xml
-index 3fec3b25e393..e9c8a4fd030a 100644
---- a/packages/SystemUI/res/values/aospa_config.xml
-+++ b/packages/SystemUI/res/values/aospa_config.xml
-@@ -47,4 +47,8 @@
-           <item>4095,0</item>
-     </string-array>
- 
+diff --git a/packages/SystemUI/res/values/nr_config.xml b/packages/SystemUI/res/values/nr_config.xml
+new file mode 100644
+index 000000000000..57ef06e68dd7
+--- /dev/null
++++ b/packages/SystemUI/res/values/nr_config.xml
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
 +    <!-- Show the 5G icon for the NR NSA override from TelephonyDisplayInfo when
 +         there's no QTI NR icon type, instead of the anchor network's icon. -->
 +    <bool name="config_nrNsaIconFromDisplayInfo">false</bool>
-+
- </resources>
++</resources>
 diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/domain/interactor/MobileIconInteractor.kt b/packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/domain/interactor/MobileIconInteractor.kt
 index 166182113ea0..0bec562aaa5c 100644
 --- a/packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/domain/interactor/MobileIconInteractor.kt
