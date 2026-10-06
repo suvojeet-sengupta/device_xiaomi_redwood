@@ -1,4 +1,4 @@
-From 8a997a5fa26ff809e2cc740e071559392132dd53 Mon Sep 17 00:00:00 2001
+From 00b220729084a485600059a5ed117aec736c9b44 Mon Sep 17 00:00:00 2001
 From: bengris32 <bengris32@protonmail.ch>
 Date: Sat, 7 Dec 2024 14:20:58 +0000
 Subject: [PATCH 07/11] CameraProviderExtension: Inject strength in

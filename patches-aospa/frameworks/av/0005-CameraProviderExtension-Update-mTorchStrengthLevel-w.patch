@@ -1,4 +1,4 @@
-From 2b19350bc3715400d70f2fc77c68690dc58e1d9c Mon Sep 17 00:00:00 2001
+From ad690ea759487c33eda8fb82b095b4f924576e72 Mon Sep 17 00:00:00 2001
 From: bengris32 <bengris32@protonmail.ch>
 Date: Sat, 7 Dec 2024 14:13:21 +0000
 Subject: [PATCH 05/11] CameraProviderExtension: Update mTorchStrengthLevel

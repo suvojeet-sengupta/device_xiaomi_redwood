@@ -1,4 +1,4 @@
-From 3cd48ace2e723e6401cc2b89cdf01caac05c0d08 Mon Sep 17 00:00:00 2001
+From d46c59dabe57fe31b81ec6c8256ac222d4661783 Mon Sep 17 00:00:00 2001
 From: Quince <quinceroms@gmail.com>
 Date: Fri, 20 Mar 2026 06:54:15 +0100
 Subject: [PATCH 11/11] CameraProviderManager: ignore torch callbacks for
