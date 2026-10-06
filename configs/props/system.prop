@@ -53,6 +53,9 @@ persist.radio.is_vonr_enabled_0=true
 persist.radio.is_vonr_enabled_1=true
 persist.vendor.vonr_setting_support=1
 
+# Maintainer, shown in About phone and Android version
+ro.aospa.maintainer=Suvojeet Sengupta
+
 # Logging: redwood has no satellite modem, and the link bandwidth
 # estimator logs a traffic poll every second
 log.tag.NtnCapabilityResolver=S
