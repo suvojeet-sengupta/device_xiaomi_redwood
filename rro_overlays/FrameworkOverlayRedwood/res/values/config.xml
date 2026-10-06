@@ -635,20 +635,20 @@
     <!-- Build fingerprint from stock ROM, shown to ARCore -->
     <string name="config_stockFingerprint" translatable="false">POCO/redwood_global/redwood:14/UKQ1.240624.001/OS2.0.17.0.UMSMIXM:user/release-keys</string>
 
-    <!-- GMS certified build shown to Play Services and the Play Store when no
-         PIF data was set or fetched, so Play Integrity passes out of the box -->
+    <!-- The stock build, shown to Play Services and the Play Store when no
+         PIF data was set or fetched, so they see redwood's own certified
+         build and never a Pixel -->
     <string-array name="config_certifiedBuildProperties" translatable="false">
-        <item>MANUFACTURER:Google</item>
-        <item>MODEL:Pixel 6 Pro</item>
-        <item>FINGERPRINT:google/raven_beta/raven:CANARY/ZP11.260717.006/16004061:user/release-keys</item>
-        <item>BRAND:google</item>
-        <item>PRODUCT:raven_beta</item>
-        <item>DEVICE:raven</item>
-        <item>VERSION.RELEASE:16</item>
-        <item>ID:ZP11.260717.006</item>
-        <item>VERSION.INCREMENTAL:16004061</item>
+        <item>MANUFACTURER:Xiaomi</item>
+        <item>BRAND:POCO</item>
+        <item>MODEL:22101320G</item>
+        <item>PRODUCT:redwood_global</item>
+        <item>DEVICE:redwood</item>
+        <item>FINGERPRINT:POCO/redwood_global/redwood:14/UKQ1.240624.001/OS2.0.17.0.UMSMIXM:user/release-keys</item>
+        <item>VERSION.RELEASE:14</item>
+        <item>ID:UKQ1.240624.001</item>
+        <item>VERSION.INCREMENTAL:OS2.0.17.0.UMSMIXM</item>
         <item>TYPE:user</item>
         <item>TAGS:release-keys</item>
-        <item>VERSION.DEVICE_INITIAL_SDK_INT:32</item>
     </string-array>
 </resources>
