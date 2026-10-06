@@ -75,6 +75,8 @@ redwood also needs a few source patches, kept in `patches/` for both ROMs:
 
 - `packages/apps/Settings`: About phone > Model lists SoC Model and Total
   RAM, but PenguinOS never added their controllers, so both were blank.
+- `frameworks/base`: Google Photos' Pixel XL spoof keeps the device's own
+  build fingerprint.
 
 and `patches-aospa/` the ones only AOSPA needs:
 
@@ -86,6 +88,9 @@ and `patches-aospa/` the ones only AOSPA needs:
   have, so without them it gets no picture sizes and closes.
 - `frameworks/base`: PropImitationHooks, which AOSPA dropped, so Play
   Integrity can pass. The overlay ships a default certified build.
+  Google Photos' Pixel XL spoof keeps the device's own build fingerprint.
+- `frameworks/av`: PenguinOS's torch strength extension, which
+  `camera/CameraProviderExtension.cpp` plugs into.
 
 `vendorsetup.sh` tells the ROMs apart by PenguinOS's
 `frameworks/base/core/res/res/values/custom_config.xml` and applies them whenever `build/envsetup.sh` (and so
