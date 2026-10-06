@@ -53,6 +53,13 @@ persist.radio.is_vonr_enabled_0=true
 persist.radio.is_vonr_enabled_1=true
 persist.vendor.vonr_setting_support=1
 
+# Logging: redwood has no satellite modem, and the link bandwidth
+# estimator logs a traffic poll every second
+log.tag.NtnCapabilityResolver=S
+log.tag.QtiLinkBandwidthEstimator-0=W
+log.tag.QtiLinkBandwidthEstimator-1=W
+log.tag.SatelliteController=S
+
 # Render
 debug.cpurend.vsync=false
 
