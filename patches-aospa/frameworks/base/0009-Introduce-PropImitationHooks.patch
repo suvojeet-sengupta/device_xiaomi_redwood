@@ -1,4 +1,4 @@
-From d64b774a784f459e41cd905a6a838162403311bc Mon Sep 17 00:00:00 2001
+From 73d3742bbc52f3c4365bf3c5fda6712c818cb86a Mon Sep 17 00:00:00 2001
 From: Omkar Chandorkar <gotenksIN@aospa.co>
 Date: Thu, 1 Sep 2022 17:18:58 +0530
 Subject: [PATCH] Introduce PropImitationHooks
@@ -29,10 +29,10 @@ Change-Id: I9d83163b0241eac99c8aeba44ecb79d303d79449
  core/res/res/values/pif_config.xml            |  34 ++
  .../keystore2/AndroidKeyStoreSpi.java         |   3 +
  .../validators/SecureSettingsValidators.java  |   6 +
- .../server/custom/AttestationService.java     | 174 ++++++
+ .../server/custom/AttestationService.java     | 182 ++++++
  .../server/wm/ActivityTaskManagerService.java |   9 +-
  .../java/com/android/server/SystemServer.java |   5 +
- 14 files changed, 1145 insertions(+), 10 deletions(-)
+ 14 files changed, 1153 insertions(+), 10 deletions(-)
  create mode 100644 core/java/com/android/internal/util/PropImitationHooks.java
  create mode 100644 core/jni/com_android_internal_util_PropImitationHooks.cpp
  create mode 100644 core/res/res/values/pif_config.xml
@@ -1251,10 +1251,10 @@ index 61330efa5215..583e7c812d68 100644
  }
 diff --git a/services/core/java/com/android/server/custom/AttestationService.java b/services/core/java/com/android/server/custom/AttestationService.java
 new file mode 100644
-index 000000000000..603917ef917c
+index 000000000000..d3a4606393b2
 --- /dev/null
 +++ b/services/core/java/com/android/server/custom/AttestationService.java
-@@ -0,0 +1,174 @@
+@@ -0,0 +1,182 @@
 +/*
 + * Copyright (C) 2024 The LeafOS Project
 + *
@@ -1275,7 +1275,6 @@ index 000000000000..603917ef917c
 +import android.provider.Settings;
 +import android.util.Log;
 +
-+import com.android.internal.util.custom.CustomUtils;
 +import com.android.server.SystemService;
 +
 +import java.io.BufferedReader;
@@ -1327,9 +1326,18 @@ index 000000000000..603917ef917c
 +                mContext.getContentResolver(), Settings.Secure.AUTO_UPDATE_PIF, 0) == 1;
 +    }
 +
++    private boolean isPackageInstalled(String packageName) {
++        try {
++            mContext.getPackageManager().getPackageInfo(packageName, 0);
++            return true;
++        } catch (PackageManager.NameNotFoundException e) {
++            return false;
++        }
++    }
++
 +    @Override
 +    public void onBootPhase(int phase) {
-+        if (!sDisableGmsProps && CustomUtils.isPackageInstalled(mContext, "com.google.android.gms")
++        if (!sDisableGmsProps && isPackageInstalled("com.google.android.gms")
 +                && phase == PHASE_BOOT_COMPLETED) {
 +            // Register receiver to allow manual fetch trigger from Settings or CLI
 +            IntentFilter filter = new IntentFilter(ACTION_FETCH_PIF);
