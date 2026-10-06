@@ -29,3 +29,5 @@ on property:ro.boot.product.hardware.sku=redwood
 # vendor init can't trigger on its init.svc property.
 on boot
     stop loc_sys_service
+    # The Dolby Vision codec2 store aborts on a CFI check as soon as it starts
+    stop dolbycodec2
