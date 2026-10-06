@@ -54,6 +54,9 @@ PenguinOS also needs a few source patches for redwood, kept in `patches/`:
   netd can't find its stats programs, and init reboots the device either way.
 - `system/memory/lmkd`: the kernel kills with Simple LMK and has no psi, so
   lmkd has to stay on the in-kernel interface instead of exiting.
+- `system/memory/libmeminfo`: the 5.4 kernel has no GPU memory tracepoint, so
+  the gpuMem bpf map isn't what libmeminfo expects and system_server aborts
+  reading it at boot. PenguinOS already carries this; AOSPA doesn't.
 - `frameworks/opt/telephony`: the modem never reports EN-DC availability and
   drops the NR secondary cell every few seconds, so on 5G NSA the status bar
   kept falling back to 4G. With `ro.telephony.sticky_nr_anchor` NR stays
