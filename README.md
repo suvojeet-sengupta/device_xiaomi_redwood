@@ -58,6 +58,9 @@ PenguinOS also needs a few source patches for redwood, kept in `patches/`:
   drops the NR secondary cell every few seconds, so on 5G NSA the status bar
   kept falling back to 4G. With `ro.telephony.sticky_nr_anchor` NR stays
   available while camped on the LTE cell it was seen on.
+- `frameworks/av`: MIUI Camera sends AF modes and triggers to the fixed focus
+  front camera, and the front video pipeline with stabilization stalls on
+  each tap to focus. cameraserver keeps AF off for fixed focus cameras.
 - `frameworks/base`: QTI's SystemUI shows the LTE anchor's icon for the NR NSA
   override unless the modem reports a QTI NR icon type, which redwood's never
   does. `config_nrNsaIconFromDisplayInfo` shows 5G there instead.
