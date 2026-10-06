@@ -623,7 +623,10 @@
     </string-array>
 
     <!-- Off-screen gestures: the goodix driver reports a double tap as
-         KEY_WAKEUP. power-feature turns the gesture on in the driver. -->
+         KEY_WAKEUP. power-feature turns the gesture on in the driver.
+         AOSPA leaves KEY_WAKEUP to its KeyHandler, so without it the screen
+         never wakes up. -->
+    <bool name="config_enableKeyHandler">true</bool>
     <integer name="config_doubleTapKeyCode">143</integer>
     <integer name="config_doubleTapDefault">1</integer>
 
