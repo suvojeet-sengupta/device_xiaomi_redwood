@@ -103,8 +103,9 @@ and `patches-aospa/` the ones only AOSPA needs:
   TEE Simulator. keystore2 serves attestation from an imported keybox for
   the picked apps, set up in More security settings.
 - `frameworks/base`, `packages/apps/Settings`, `packages/apps/ParanoidSettings`:
-  ignore secure windows, hide applist, the maintainer in device info, and
-  the face virtual HAL only being used when it's installed.
+  ignore secure windows (in More security & privacy too), hide applist,
+  the maintainer in device info, three finger swipe to screenshot, and the
+  face virtual HAL only being used when it's installed.
 
 `vendorsetup.sh` tells the ROMs apart by PenguinOS's
 `frameworks/base/core/res/res/values/custom_config.xml` and applies them whenever `build/envsetup.sh` (and so
