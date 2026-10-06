@@ -82,6 +82,8 @@ redwood also needs a few source patches, kept in `patches/` for both ROMs:
 
 and `patches-aospa/` the ones only AOSPA needs:
 
+- `device/qcom/common`: PenguinOS's copy declares the QSPM HAL attributes,
+  which AOSPA's QSSI sepolicy already has, so sepolicy failed to build.
 - `system/memory/libmeminfo`: the 5.4 kernel has no GPU memory tracepoint, so
   the gpuMem bpf map isn't what libmeminfo expects and system_server aborts
   reading it at boot. PenguinOS already carries this.
