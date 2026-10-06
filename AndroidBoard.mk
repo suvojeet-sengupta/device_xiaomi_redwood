@@ -6,8 +6,15 @@
 
 LOCAL_PATH := $(call my-dir)
 
-# The kernel is built from TARGET_KERNEL_SOURCE by QTI's kernel_definitions.mk,
-# which the ROM links into vendor/qcom/build/tasks. Don't include it here: it
-# has to come after generate_extra_images.mk, which only defines the DTBO
-# image rule while TARGET_PREBUILT_KERNEL is still unset, and after the core
-# Makefile, so its dtb.img rule wins over the one for prebuilt DTBs.
+ifneq ($(TARGET_PREBUILT_KERNEL),)
+# The QTI HALs built from source pick the UAPI headers up from the kernel
+# build output, which doesn't exist with a prebuilt kernel. Stage the
+# prebuilt headers there instead.
+REDWOOD_KERNEL_HEADERS_OUT := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
+REDWOOD_KERNEL_HEADERS := $(shell find $(TARGET_BOARD_KERNEL_HEADERS) -type f)
+
+$(REDWOOD_KERNEL_HEADERS_OUT): $(REDWOOD_KERNEL_HEADERS)
+	$(hide) rm -rf $@
+	$(hide) mkdir -p $@/include
+	$(hide) cp -r $(TARGET_BOARD_KERNEL_HEADERS)/. $@/include/
+endif

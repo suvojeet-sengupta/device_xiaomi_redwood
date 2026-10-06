@@ -116,16 +116,13 @@ survive a `repo sync`.
 
   <!-- redwood -->
   <project path="device/xiaomi/redwood" name="suvojeet-sengupta/device_xiaomi_redwood" remote="github" revision="clo" />
-  <project path="kernel/xiaomi/sm7325" name="suvojeet-sengupta/scarlet_xiaomi_sm7325" remote="github" revision="redwood" clone-depth="1" />
+  <project path="device/xiaomi/redwood-kernel" name="suvojeet-sengupta/device_xiaomi_redwood-kernel" remote="github" revision="clo" clone-depth="1" />
   <project path="vendor/xiaomi/redwood" name="suvojeet-sengupta/vendor_xiaomi_redwood" remote="github" revision="clo" clone-depth="1" />
   <project path="vendor/xiaomi/redwood-miuicamera" name="suvojeet-sengupta/android_vendor_xiaomi_redwood-miuicamera" remote="github" revision="miui-seventeen" clone-depth="1" />
   <project path="hardware/xiaomi" name="AOSPA/android_hardware_xiaomi" remote="aospa" revision="calcite" />
   <project path="hardware/dolby" name="suvojeet-sengupta/hardware_dolby" remote="github" revision="moto/dolby-dolbyvision" clone-depth="1" />
 </manifest>
 ```
-
-The kernel is Scarlet, built with the ROM from `kernel/xiaomi/sm7325` by QTI's
-kernel scripts with `vendor/redwood_defconfig`.
 
 Then sync and build:
 
