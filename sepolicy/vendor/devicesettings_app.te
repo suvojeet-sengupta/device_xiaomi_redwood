@@ -6,3 +6,6 @@ allow devicesettings_app vendor_sysfs_kgsl:dir search;
 allow devicesettings_app vendor_sysfs_kgsl:{ file lnk_file } rw_file_perms;
 allow devicesettings_app vendor_sysfs_battery_supply:dir search;
 allow devicesettings_app vendor_sysfs_battery_supply:file rw_file_perms;
+
+# QTI BoostFramework looks up the perf HAL from every app process
+dontaudit devicesettings_app vendor_hal_perf2_service:service_manager find;

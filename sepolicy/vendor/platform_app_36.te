@@ -1,0 +1,11 @@
+# Platform apps targeting SDK 36 or lower, like Dolby's DaxService, run as
+# platform_app_36 instead of platform_app.
+
+# Audio
+get_prop(platform_app_36, audio_config_prop)
+
+# Dolby
+hal_client_domain(platform_app_36, hal_dms)
+hal_client_domain(platform_app_36, hal_dvs)
+allow platform_app_36 hal_dms_hwservice:hwservice_manager find;
+binder_call(hal_dms_default, platform_app_36)

@@ -1,0 +1,2 @@
+# QTI BoostFramework looks up the perf HAL from every app process
+dontaudit priv_app_36 vendor_hal_perf2_service:service_manager find;
