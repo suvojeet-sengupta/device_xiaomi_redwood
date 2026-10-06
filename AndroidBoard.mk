@@ -6,7 +6,12 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifneq ($(TARGET_PREBUILT_KERNEL),)
+# Build the kernel from TARGET_KERNEL_SOURCE with QTI's kernel scripts
+ifeq ($(TARGET_PREBUILT_KERNEL),)
+include device/qcom/kernelscripts/kernel_definitions.mk
+endif
+
+ifneq ($(TARGET_BOARD_KERNEL_HEADERS),)
 # The QTI HALs built from source pick the UAPI headers up from the kernel
 # build output, which doesn't exist with a prebuilt kernel. Stage the
 # prebuilt headers there instead.

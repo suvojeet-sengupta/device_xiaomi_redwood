@@ -6,7 +6,6 @@
 #
 
 DEVICE_PATH := device/xiaomi/redwood
-KERNEL_PATH := device/xiaomi/redwood-kernel
 
 BOARD_VENDOR := xiaomi
 
@@ -98,12 +97,11 @@ BOARD_KERNEL_CMDLINE += iptable_raw.raw_before_defrag=1
 BOARD_KERNEL_CMDLINE += ip6table_raw.raw_before_defrag=1
 BOARD_KERNEL_CMDLINE += androidboot.init_fatal_reboot_target=recovery
 
-# Kernel - Prebuilt
-TARGET_PREBUILT_KERNEL := $(KERNEL_PATH)/Image
-TARGET_BOARD_KERNEL_HEADERS := $(KERNEL_PATH)/kernel-headers
-BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_PATH)/dtbo.img
-BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_PATH)/dtb
-BOARD_MKBOOTIMG_ARGS += --dtb $(BOARD_PREBUILT_DTBIMAGE_DIR)/01_dtbdump_Qualcomm_Technologies,_Inc._Yupik_SoC.dtb
+# Kernel - Source
+TARGET_KERNEL_SOURCE := kernel/xiaomi/sm7325
+TARGET_KERNEL_VERSION := 5.4
+KERNEL_DEFCONFIG := vendor/redwood_defconfig
+KERNEL_CLANG_VERSION := r563880c
 
 # OTA
 TARGET_OTA_ASSERT_DEVICE := redwood
