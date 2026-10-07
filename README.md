@@ -41,6 +41,10 @@ is upstream AOSPA's lahaina platform manifest
 copy still points at the older `vauxite` branches, which don't match the
 `vendor/qcom/common` blobs.
 
+AOSPA's product config asks for ParanoidSense, its face unlock, but the
+calcite manifest doesn't include it, so the build skipped it and there was no
+face unlock. The local manifest adds it.
+
 `device/qcom/common` comes from PenguinOS's own fork, since AOSPA's now
 expects a newer CLO QSSI sepolicy than PenguinOS pins and still references
 the `hub_app` domain PenguinOS dropped.
@@ -146,6 +150,7 @@ survive a `repo sync`.
   <project path="device/xiaomi/redwood-kernel" name="suvojeet-sengupta/device_xiaomi_redwood-kernel" remote="github" revision="clo" clone-depth="1" />
   <project path="vendor/xiaomi/redwood" name="suvojeet-sengupta/vendor_xiaomi_redwood" remote="github" revision="clo" clone-depth="1" />
   <project path="vendor/xiaomi/redwood-miuicamera" name="suvojeet-sengupta/android_vendor_xiaomi_redwood-miuicamera" remote="github" revision="miui-seventeen" clone-depth="1" />
+  <project path="packages/apps/ParanoidSense" name="AOSPA/android_packages_apps_ParanoidSense" remote="aospa" revision="calcite" />
   <project path="hardware/xiaomi" name="AOSPA/android_hardware_xiaomi" remote="aospa" revision="calcite" />
   <project path="hardware/dolby" name="suvojeet-sengupta/hardware_dolby" remote="github" revision="moto/dolby-dolbyvision" clone-depth="1" />
 </manifest>
