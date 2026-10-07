@@ -86,7 +86,9 @@ and `patches-aospa/` the ones only AOSPA needs:
   bit libraries but declares multiArch, so Android 17 won't install it on
   redwood, and it overrides the AOSP WebView. With no WebView, Setup Wizard
   and Play Store crashed on a clean flash. Dropping it brings back the AOSP
-  WebView, which has 32 and 64 bit libraries.
+  WebView, which has 32 and 64 bit libraries, and it's listed first in the
+  WebView providers, since WebViewUpdateService only falls back to the
+  first available by default one.
 - `device/qcom/common`: PenguinOS's copy declares the QSPM HAL attributes,
   which AOSPA's QSSI sepolicy already has, so sepolicy failed to build.
 - `system/memory/libmeminfo`: the 5.4 kernel has no GPU memory tracepoint, so
