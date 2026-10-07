@@ -91,6 +91,10 @@ and `patches-aospa/` the ones only AOSPA needs:
   first available by default one.
 - `device/qcom/common`: PenguinOS's copy declares the QSPM HAL attributes,
   which AOSPA's QSSI sepolicy already has, so sepolicy failed to build.
+- `system/core`: the health HAL only looked for chargers when it started,
+  before the USB power supply reports a USB type, so plugging in a charger
+  showed no charging indicator, LED or notification. Look for chargers on
+  every update.
 - `system/memory/libmeminfo`: the 5.4 kernel has no GPU memory tracepoint, so
   the gpuMem bpf map isn't what libmeminfo expects and system_server aborts
   reading it at boot. PenguinOS already carries this.
