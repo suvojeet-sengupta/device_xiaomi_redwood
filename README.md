@@ -96,11 +96,12 @@ and `patches-aospa/` the ones only AOSPA needs:
   Camera builds StreamConfigurationMap through constructors AOSP doesn't
   have, so without them it gets no picture sizes and closes.
 - `frameworks/base`: PropImitationHooks, which AOSPA dropped, so Play
-  Integrity can pass. The overlay ships a default certified build. With a
-  Play Integrity Fix module and Tricky Store, set
-  `persist.sys.pihooks.disable.gms_props` and
-  `persist.sys.pihooks.disable.gms_key_attestation_block` to 1 so the ROM
-  stops spoofing and blocking key attestation.
+  Integrity can pass. The overlay ships a default certified build, which
+  gives basic integrity. Key attestation isn't blocked, so Play Integrity
+  Fix with a Tricky Store keybox gets device and strong integrity without
+  any setup. Setting `persist.sys.pihooks.disable.gms_key_attestation_block`
+  to false brings the block back, and `persist.sys.pihooks.disable.gms_props`
+  turns off the props spoofing.
   Google Photos' Pixel XL spoof keeps the device's own build fingerprint.
 - `frameworks/av`: PenguinOS's torch strength extension, which
   `camera/CameraProviderExtension.cpp` plugs into.
