@@ -79,44 +79,14 @@ cd device/xiaomi/redwood
 ./extract-files.py /path/to/stock/HyperOS/dump
 ```
 
-## Patches and Modifications
+## Features
 
-### Kernel Compatibility
-
-Redwood uses a 5.4 kernel but must run on Android 17, which expects 5.10+ in several areas. Applied patches address:
-
-- **Connectivity (5.10 BPF requirement):** Network drivers must run legacy psi-less code paths
-- **Memory management:** lmkd uses in-kernel interface for Simple LMK support
-- **Power:** ADPF skips WALT-based thread boost (5.10+ only); logs only on debug builds
-
-### Modem Quirks
-
-- **5G NSA:** Modem drops secondary cells frequently; `ro.telephony.sticky_nr_anchor` keeps NR registered
-- **EN-DC:** Not reported; fallback logic corrected in telephony framework
-
-### Camera
-
-- **Front camera:** Fixed focus with stabilization pipeline; AF triggers disabled, AE regions ignored to prevent stall
-- **MIUI Camera:** Custom constructors required for proper resolution detection
-
-### Display & DRM
-
-- Dolby Vision support enabled; `libdolbyvision` and related decoders included
-- HDR10 fallback functional on all playback paths
-
-### Security & Integrity
-
-- **Play Integrity:** PropImitationHooks enabled with runtime controls:
-  - `persist.sys.pihooks.disable.gms_props`: Disable property spoofing
-  - `persist.sys.pihooks.disable.gms_key_attestation_block`: Disable attestation block
-- **TEE Simulator:** Manual keybox import supported for development/testing
-- **Face Unlock:** ParanoidSense integrated from AOSPA
-
-### System Behavior
-
-- Three-finger swipe gesture for screenshots
-- "Ignore secure" flag available in More Security & Privacy
-- Device maintainer name displayed in device info
+- **Play Integrity:** PropImitationHooks with runtime controls via `persist.sys.pihooks.*` properties
+- **Face Unlock:** ParanoidSense integrated
+- **Dolby Vision:** Full support with HDR10 fallback
+- **Gestures:** Three-finger swipe to screenshot
+- **Security Options:** Ignore secure windows flag available
+- **Device Info:** Maintainer name displayed
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
