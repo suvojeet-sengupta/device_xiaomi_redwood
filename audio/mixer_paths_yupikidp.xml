@@ -549,6 +549,13 @@
     <ctl name="CDC_DMA_TX_4 SetCalMode" value="CAL_MODE_DEFAULT"/>
     <!-- for mius end -->
     <ctl name="Haptics Amplitude Step" value="62" />
+    <!-- AW88261 amps: top on, bottom off, DSP processing off until a path needs it -->
+    <ctl name="aw882xx_rx_switch" value="Disable" />
+    <ctl name="aw882xx_tx_switch" value="Disable" />
+    <ctl name="aw882xx_copp_switch" value="Disable" />
+    <ctl name="aw_dev_0_prof" value="Music" />
+    <ctl name="aw_dev_0_switch" value="Enable" />
+    <ctl name="aw_dev_1_switch" value="Disable" />
     <path name="deep-buffer-playback speaker">
         <ctl name="PRI_TDM_RX_0 Audio Mixer MultiMedia1" value="1" />
     </path>
@@ -2458,6 +2465,15 @@
     </path>
     <!-- Add the new path end -->
     <path name="speaker">
+        <!-- Both AW88261 amps on PRI_TDM_RX_0, set up as stock does -->
+        <ctl name="PRI_TDM_RX_0 SampleRate" value="KHZ_48" />
+        <ctl name="PRI_TDM_RX_0 Channels" value="Two" />
+        <ctl name="PRI_TDM_RX_0 Format" value="S32_LE" />
+        <ctl name="aw_dev_1_prof" value="Music" />
+        <ctl name="aw_dev_1_switch" value="Enable" />
+        <ctl name="aw_dev_0_prof" value="Music" />
+        <ctl name="aw_dev_0_switch" value="Enable" />
+        <ctl name="aw882xx_rx_switch" value="Enable" />
         <ctl name="WSA_CDC_DMA_RX_0 Channels" value="Two" />
         <ctl name="WSA RX0 MUX" value="AIF1_PB" />
         <ctl name="WSA RX1 MUX" value="AIF1_PB" />
@@ -2476,6 +2492,7 @@
         <ctl name="SWR DAC_Port Switch" value="1" />
     </path>
     <path name="speaker-mono-2">
+        <path name="speaker" />
         <ctl name="WSA_CDC_DMA_RX_0 Channels" value="One" />
         <ctl name="WSA RX0 MUX" value="AIF1_PB" />
         <ctl name="WSA_RX0 INP0" value="RX0" />
@@ -2485,6 +2502,7 @@
         <ctl name="SpkrLeft SWR DAC_Port Switch" value="1" />
     </path>
     <path name="speaker-mono">
+        <path name="speaker" />
         <ctl name="WSA_CDC_DMA_RX_0 Channels" value="One" />
         <ctl name="WSA RX1 MUX" value="AIF1_PB" />
         <ctl name="WSA_RX1 INP0" value="RX1" />
@@ -2601,7 +2619,10 @@
     <path name="vi-feedback-mono-2">
     </path>
     <path name="handset">
+        <!-- Only the top amp, mono, in its Receiver profile, as stock does -->
+        <ctl name="PRI_TDM_RX_0 Channels" value="One" />
         <ctl name="aw_dev_0_prof" value="Receiver" />
+        <ctl name="aw_dev_0_switch" value="Enable" />
         <ctl name="aw_dev_1_switch" value="Disable" />
     </path>
     <path name="headphones">
@@ -2667,13 +2688,13 @@
         <path name="handset" />
     </path>
     <path name="voice-speaker">
-        <path name="speaker-mono" />
+        <path name="speaker" />
     </path>
     <path name="voice-speaker-stereo">
         <path name="speaker" />
     </path>
     <path name="voice-speaker-2">
-        <path name="speaker-mono-2" />
+        <path name="speaker" />
     </path>
     <path name="voice-speaker-hdk">
         <path name="speaker-mono" />
