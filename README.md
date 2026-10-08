@@ -1,4 +1,3 @@
-Copyright (C) 2025 The LineageOS Project
 Copyright (C) 2026 Paranoid Android
 
 # Device tree for Xiaomi Poco X5 Pro 5G / Redmi Note 12 Pro Speed (redwood)
@@ -116,4 +115,3 @@ cd device/xiaomi/redwood
 - [Paranoid Android](https://github.com/AOSPA) and
   [PenguinOS](https://github.com/Project-PenguinOS) for the ROMs and the qcom
   common trees
-- [LineageOS](https://github.com/LineageOS) for the device tree base
