@@ -12,7 +12,7 @@
 redwood_apply_patches() {
     local top="${T:-$(gettop)}"
     local device="$top/device/xiaomi/redwood"
-    local rom patches patch dir
+    local rom patches patch dir subject
 
     # PenguinOS keeps its own framework config in custom_config.xml
     if [ -f "$top/frameworks/base/core/res/res/values/custom_config.xml" ]; then
@@ -29,8 +29,13 @@ redwood_apply_patches() {
             dir="$top/$(dirname "$patch")"
             [ -d "$dir" ] || continue
 
-            # Already applied
+            # Already applied. A later patch can change the same lines, so
+            # also look for the commit itself, not just for its changes.
             if git -C "$dir" apply --check --reverse "$patches/$patch" &>/dev/null; then
+                continue
+            fi
+            subject="$(git mailinfo /dev/null /dev/null < "$patches/$patch" | sed -n 's/^Subject: //p')"
+            if [ -n "$subject" ] && git -C "$dir" log -n 500 --format=%s | grep -Fxq -- "$subject"; then
                 continue
             fi
 
