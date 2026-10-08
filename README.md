@@ -80,10 +80,11 @@ Then sync:
 repo sync --current-branch --no-tags -j4
 ```
 
-The tree carries the source patches redwood needs in `patches/`,
-`patches-aospa/` and `patches-penguinos/`. `vendorsetup.sh` applies them
-automatically when you run `build/envsetup.sh` or `rom-build.sh`, so there's
-nothing to apply by hand, and they survive a `repo sync`.
+The tree carries the source patches redwood needs in `patches/`:
+`common/` for both ROMs, `aospa/` and `penguinos/` for one ROM only.
+`vendorsetup.sh` applies them automatically when you run
+`build/envsetup.sh` or `rom-build.sh`, so there's nothing to apply by hand,
+and they survive a `repo sync`.
 
 ## Building
 

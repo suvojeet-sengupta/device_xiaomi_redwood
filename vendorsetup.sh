@@ -4,10 +4,10 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# Apply the source patches redwood needs, see patches/. Patches in
-# patches/ apply to both PenguinOS and AOSPA, the ones in
-# patches-penguinos/ and patches-aospa/ only to that ROM. Patches that are
-# already applied are skipped, so this is safe to run on every envsetup.
+# Apply the source patches redwood needs. Patches in patches/common/ apply
+# to both ROMs, the ones in patches/aospa/ and patches/penguinos/ only to
+# that ROM. Patches that are already applied are skipped, so this is safe
+# to run on every envsetup.
 
 redwood_apply_patches() {
     local top="${T:-$(gettop)}"
@@ -21,7 +21,7 @@ redwood_apply_patches() {
         rom=aospa
     fi
 
-    for patches in "$device/patches" "$device/patches-$rom"; do
+    for patches in "$device/patches/common" "$device/patches/$rom"; do
         [ -d "$patches" ] || continue
 
         for patch in $(cd "$patches" && find . -name '*.patch' | sort); do
