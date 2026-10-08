@@ -1,11 +1,22 @@
-# Redwood Device Tree
+# Redwood Device Tree (CLO)
 
 Copyright (C) 2025 The LineageOS Project  
 Copyright (C) 2026 Paranoid Android
 
-Device configuration for Xiaomi Poco X5 Pro 5G / Redmi Note 12 Pro Speed (redwood).
+Device configuration for Xiaomi Poco X5 Pro 5G / Redmi Note 12 Pro Speed (codenamed **redwood**).
 
-**Maintainer:** [@suvojeet-sengupta](https://github.com/suvojeet-sengupta)
+**Branch:** `clo` (CLO = Calcite Level Overlay for Paranoid Android)  
+**Maintainer:** [@suvojeet-sengupta](https://github.com/suvojeet-sengupta) — Developed and maintained independently
+
+## About This Tree
+
+The CLO branch is a custom port of Paranoid Android (AOSPA) `calcite` optimized for the Redwood device. It includes:
+
+- Hardware enablement for Qualcomm SM7325-based Redwood
+- Integration with Paranoid Android's latest features
+- Custom optimizations for display, audio, and modem
+- Security features including Play Integrity support and face unlock
+- Dolby Vision and advanced HDR capabilities
 
 ## Specifications
 
