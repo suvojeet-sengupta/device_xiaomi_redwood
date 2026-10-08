@@ -1,107 +1,54 @@
-# Redwood Device Tree (CLO)
-
-Copyright (C) 2025 The LineageOS Project  
+Copyright (C) 2025 The LineageOS Project
 Copyright (C) 2026 Paranoid Android
 
-Device configuration for Xiaomi Poco X5 Pro 5G / Redmi Note 12 Pro Speed (codenamed **redwood**).
+# Device tree for Xiaomi Poco X5 Pro 5G / Redmi Note 12 Pro Speed (redwood)
 
-**Branch:** `clo` (CLO = Calcite Level Overlay for Paranoid Android)  
-**Maintainer:** [@suvojeet-sengupta](https://github.com/suvojeet-sengupta) — Developed and maintained independently
+This is a CLO device tree for redwood, written and maintained by
+[Suvojeet Sengupta](https://github.com/suvojeet-sengupta).
 
-## About This Tree
-
-The CLO branch is a custom port of Paranoid Android (AOSPA) `calcite` optimized for the Redwood device. It includes:
-
-- Hardware enablement for Qualcomm SM7325-based Redwood
-- Integration with Paranoid Android's latest features
-- Custom optimizations for display, audio, and modem
-- Security features including Play Integrity support and face unlock
-- Dolby Vision and advanced HDR capabilities
+CLO stands for CodeLinaro (formerly CodeAurora), where Qualcomm publishes its
+Android sources. A CLO tree builds on Qualcomm's own QSSI and vendor
+components instead of the AOSP versions, the same base Paranoid Android uses.
+This tree builds Paranoid Android `calcite` (Android 17) and PenguinOS
+`celerity`.
 
 ## Specifications
 
 | Component | Details |
 |-----------|---------|
-| **Chipset** | Qualcomm Snapdragon 778G 5G (SM7325-2-AB) |
-| **CPU** | Kryo 670, Octa-core, up to 2.4 GHz |
-| **GPU** | Adreno 642L |
-| **RAM** | 6/8 GB LPDDR4X |
-| **Storage** | 128/256 GB UFS 2.2 |
-| **Display** | 6.67", 2400 × 1080, 120 Hz |
-| **Battery** | 5000 mAh (non-removable) |
-| **Cameras** | 108 MP (main), 8 MP (wide), 2 MP (macro), 16 MP (front) |
-| **OS** | Ships Android 12, supports Android 17 |
+| Chipset   | Qualcomm Snapdragon 778G 5G (SM7325) |
+| CPU       | Octa-core Kryo 670, up to 2.4 GHz |
+| GPU       | Adreno 642L |
+| RAM       | 6/8 GB LPDDR4X |
+| Storage   | 128/256 GB UFS 2.2 |
+| Display   | 6.67" AMOLED, 2400 x 1080, 120 Hz, HDR10+, Dolby Vision |
+| Battery   | 5000 mAh, 67 W charging |
+| Cameras   | 108 MP main, 8 MP ultra wide, 2 MP macro, 16 MP front |
+| Shipped   | Android 12 (MIUI 14) |
 
 ![Poco X5 Pro 5G](https://i.blogs.es/98a725/poco-x5-pro/1366_2000.jpeg)
 
-## Building
+## What's in the tree
 
-### Prerequisites
+- Kernel: prebuilt Turbo 5.4.302 with KernelSU, from `device/xiaomi/redwood-kernel`
+- Vendor: extracted from stock HyperOS, in `vendor/xiaomi/redwood`
+- Camera: MIUI Camera, from `vendor/xiaomi/redwood-miuicamera`
+- Audio: Dolby Atmos, from `hardware/dolby`
+- Face unlock: ParanoidSense
+- Xiaomi parts: charging control and other device settings
+- Play Integrity: basic integrity out of the box, device and strong integrity
+  with Play Integrity Fix and Tricky Store
+- Gestures: double tap to wake, three finger swipe to screenshot
 
-This device tree targets **Paranoid Android** (AOSPA) `calcite` branch. Set up the manifest by adding `.repo/local_manifests/redwood.xml`:
+## Getting the sources
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-  <!-- AOSPA Lahaina platform -->
-  <project path="vendor/qcom/opensource/audio-hal/primary-hal" name="AOSPA/android_hardware_qcom_audio" remote="aospa" revision="calcite-888" />
-  <project path="hardware/qcom/display" name="AOSPA/android_hardware_qcom_display" remote="aospa" revision="calcite-888" />
-  <project path="hardware/qcom/gps" name="AOSPA/android_hardware_qcom_gps" remote="aospa" revision="calcite-legacy-component" />
-  <project path="hardware/qcom/media" name="AOSPA/android_hardware_qcom_media" remote="aospa" revision="calcite-888" />
-  <remove-project name="AOSPA/android_hardware_qcom_thermal" />
-  <project path="vendor/qcom/opensource/thermal-hal" name="AOSPA/android_hardware_qcom_thermal" remote="aospa" revision="calcite-legacy" />
-
-  <!-- Device -->
-  <project path="device/xiaomi/redwood" name="suvojeet-sengupta/device_xiaomi_redwood" remote="github" revision="clo" />
-  <project path="device/xiaomi/redwood-kernel" name="suvojeet-sengupta/device_xiaomi_redwood-kernel" remote="github" revision="clo" clone-depth="1" />
-  <project path="vendor/xiaomi/redwood" name="suvojeet-sengupta/vendor_xiaomi_redwood" remote="github" revision="clo" clone-depth="1" />
-  <project path="vendor/xiaomi/redwood-miuicamera" name="suvojeet-sengupta/android_vendor_xiaomi_redwood-miuicamera" remote="github" revision="miui-seventeen" clone-depth="1" />
-  <project path="packages/apps/ParanoidSense" name="AOSPA/android_packages_apps_ParanoidSense" remote="aospa" revision="calcite" />
-  <project path="hardware/xiaomi" name="AOSPA/android_hardware_xiaomi" remote="aospa" revision="calcite" />
-  <project path="hardware/dolby" name="suvojeet-sengupta/hardware_dolby" remote="github" revision="moto/dolby-dolbyvision" clone-depth="1" />
-</manifest>
-```
-
-### Build Steps
-
-1. Sync repositories:
-```bash
-repo sync --current-branch --no-tags -j4
-```
-
-2. Build (test signing):
-```bash
-./rom-build.sh redwood
-```
-
-3. Build with release signing:
-```bash
-./rom-build.sh redwood -t user -s ~/.android-certs
-```
-
-**Note:** Switching between release and test keys requires a factory reset. Switching between `userdebug` and `user` with the same keys does not.
-
-### Extracting Vendor Blobs
-
-Update vendor blobs whenever `proprietary-files.txt` changes:
-
-```bash
-cd device/xiaomi/redwood
-./extract-files.py /path/to/stock/HyperOS/dump
-```
-
-## Features
-
-- **Play Integrity:** PropImitationHooks with runtime controls via `persist.sys.pihooks.*` properties
-- **Face Unlock:** ParanoidSense integrated
-- **Dolby Vision:** Full support with HDR10 fallback
-- **Gestures:** Three-finger swipe to screenshot
-- **Security Options:** Ignore secure windows flag available
-- **Device Info:** Maintainer name displayed
+Add this to `.repo/local_manifests/redwood.xml`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
+  <remote name="penguin" fetch="https://github.com/" />
+
   <!-- lahaina platform -->
   <project path="vendor/qcom/opensource/audio-hal/primary-hal" name="AOSPA/android_hardware_qcom_audio" remote="aospa" revision="calcite-888" />
   <project path="hardware/qcom/display" name="AOSPA/android_hardware_qcom_display" remote="aospa" revision="calcite-888" />
@@ -110,14 +57,14 @@ cd device/xiaomi/redwood
   <remove-project name="AOSPA/android_hardware_qcom_thermal" />
   <project path="vendor/qcom/opensource/thermal-hal" name="AOSPA/android_hardware_qcom_thermal" remote="aospa" revision="calcite-legacy" />
 
-  <!-- PenguinOS qcom common: matches the pinned CLO QSSI sepolicy -->
+  <!-- qcom common -->
   <remove-project name="AOSPA/android_device_qcom_common" />
   <project path="device/qcom/common" name="Project-PenguinOS/device_qcom_common" remote="penguin" revision="celerity">
     <linkfile dest="vendor/qcom/build/tasks/generate_extra_images.mk" src="generate_extra_images.mk"/>
   </project>
 
   <!-- redwood -->
-  <project path="device/xiaomi/redwood" name="suvojeet-sengupta/device_xiaomi_redwood" remote="github" revision="clo" />
+  <project path="device/xiaomi/redwood" name="suvojeet-sengupta/device_xiaomi_redwood_clo" remote="github" revision="clo" />
   <project path="device/xiaomi/redwood-kernel" name="suvojeet-sengupta/device_xiaomi_redwood-kernel" remote="github" revision="clo" clone-depth="1" />
   <project path="vendor/xiaomi/redwood" name="suvojeet-sengupta/vendor_xiaomi_redwood" remote="github" revision="clo" clone-depth="1" />
   <project path="vendor/xiaomi/redwood-miuicamera" name="suvojeet-sengupta/android_vendor_xiaomi_redwood-miuicamera" remote="github" revision="miui-seventeen" clone-depth="1" />
@@ -127,29 +74,46 @@ cd device/xiaomi/redwood
 </manifest>
 ```
 
-Then sync and build:
+Then sync:
 
 ```bash
 repo sync --current-branch --no-tags -j4
+```
+
+The tree carries the source patches redwood needs in `patches/`,
+`patches-aospa/` and `patches-penguinos/`. `vendorsetup.sh` applies them
+automatically when you run `build/envsetup.sh` or `rom-build.sh`, so there's
+nothing to apply by hand, and they survive a `repo sync`.
+
+## Building
+
+```bash
 ./rom-build.sh redwood
 ```
 
-For a release signed build, pass the folder with the signing keys (releasekey,
-platform, shared, media, networkstack, sdk_sandbox, bluetooth, nfc and one key
-per APEX, with its payload `.pem`):
+For a release signed build, pass the folder with your signing keys:
 
 ```bash
 ./rom-build.sh redwood -t user -s ~/.android-certs
 ```
 
-Moving between test keys and release keys needs a data wipe, moving between
-`userdebug` and `user` with the same keys doesn't. Keep a copy of the keys off
-the build server, a build signed with other keys can't be flashed over it.
+Moving between test keys and release keys needs a data wipe. Keep a backup of
+your keys off the build server, since a build signed with different keys can't
+be flashed over yours.
 
-`vendor/xiaomi/redwood` must be re-extracted whenever `proprietary-files.txt`
-changes, from a dump of the stock HyperOS firmware:
+## Updating vendor blobs
+
+Re-extract `vendor/xiaomi/redwood` whenever `proprietary-files.txt` changes,
+from a dump of the stock HyperOS firmware:
 
 ```bash
-cd device/xiaomi/redwood && ./extract-files.py /path/to/stock/dump
+cd device/xiaomi/redwood
+./extract-files.py /path/to/stock/dump
 ```
 
+## Credits
+
+- [Paranoid Android](https://github.com/AOSPA) and
+  [PenguinOS](https://github.com/Project-PenguinOS) for the ROMs and the qcom
+  common trees
+- [LineageOS](https://github.com/LineageOS) for the device tree base
