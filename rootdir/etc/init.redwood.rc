@@ -34,5 +34,3 @@ on boot
     wait /sys/class/power_supply/usb/type
     restart vendor.health-default
     stop loc_sys_service
-    # The Dolby Vision codec2 store aborts on a CFI check as soon as it starts
-    stop dolbycodec2
