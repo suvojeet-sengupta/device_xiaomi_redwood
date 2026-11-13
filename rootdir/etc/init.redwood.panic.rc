@@ -1,0 +1,7 @@
+# Android's init.rc turns panic_on_oops on in its init action, so a kernel
+# oops on 6.18 became a panic that reset the phone, and pstore doesn't survive
+# redwood's hard resets. Turn it back off right after, so an oops kills only
+# the task and its backtrace reaches dmesg. Only system init may write it,
+# vendor init can't, so this lives on system_ext.
+on init
+    write /proc/sys/kernel/panic_on_oops 0

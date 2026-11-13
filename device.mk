@@ -273,6 +273,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/init.target.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.target.rc
 
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/etc/init.redwood.mglru.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.redwood.mglru.rc \
+    $(LOCAL_PATH)/rootdir/etc/init.redwood.panic.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.redwood.panic.rc
+
+PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/bin/init.kernel.post_boot-yupik.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.kernel.post_boot-yupik.sh \
     $(LOCAL_PATH)/rootdir/bin/init.lahaina.perf.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.lahaina.perf.sh \
     $(LOCAL_PATH)/rootdir/bin/init.qcom.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.qcom.sh \
