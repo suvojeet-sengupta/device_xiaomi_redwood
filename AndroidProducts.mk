@@ -5,4 +5,5 @@
 #
 
 PRODUCT_MAKEFILES := \
+    $(LOCAL_DIR)/custom_redwood.mk \
     $(LOCAL_DIR)/lineage_redwood.mk

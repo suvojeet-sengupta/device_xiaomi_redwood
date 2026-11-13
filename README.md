@@ -7,6 +7,37 @@ The Xiaomi Poco X5 Pro 5G/Redmi Note 12 Pro Speed (codenamed _"redwood"_) is a m
 
 It was released in February 2023.
 
+## PixelOS (seventeen) with the 6.18 kernel
+
+This branch builds PixelOS 17 (`custom_redwood`) and LineageOS
+(`lineage_redwood`) on the 6.18 kernel prebuilt
+([device_xiaomi_redwood-kernel-6.18](https://github.com/suvojeet-sengupta/device_xiaomi_redwood-kernel-6.18)).
+
+`.repo/local_manifests/redwood.xml`:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="redwood" fetch="https://github.com" />
+  <project name="suvojeet-sengupta/android_device_xiaomi_redwood_pixelos" path="device/xiaomi/redwood" remote="redwood" revision="seventeen" />
+  <project name="suvojeet-sengupta/device_xiaomi_redwood-kernel-6.18" path="device/xiaomi/redwood-kernel-6.18" remote="redwood" revision="main" />
+  <project name="BlueHeart01/android_vendor_xiaomi_redwood" path="vendor/xiaomi/redwood" remote="redwood" revision="17" clone-depth="1" />
+  <project name="BlueHeart01/redwood_hardware_dolby" path="hardware/dolby" remote="redwood" revision="moto-1.0" />
+  <project name="LineageOS/android_hardware_xiaomi" path="hardware/xiaomi" remote="redwood" revision="lineage-24.0" />
+</manifest>
+```
+
+```bash
+repo init -u https://github.com/PixelOS-AOSP/android_manifest.git -b seventeen --git-lfs
+repo sync -c -j8 --force-sync --no-tags
+source build/envsetup.sh
+lunch custom_redwood-cp2a-userdebug
+m pixelos
+```
+
+KernelSU, KernelSU Next and KowSU patch the boot image with their
+android17-6.18 module (KMI android17-6.18, chosen by hand).
+
 ## Device specifications
 
 Basic   | Spec Sheet
