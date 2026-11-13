@@ -11,28 +11,21 @@ It was released in February 2023.
 
 This branch builds PixelOS 17 (`custom_redwood`) and LineageOS
 (`lineage_redwood`) on the 6.18 kernel prebuilt
-([device_xiaomi_redwood-kernel-6.18](https://github.com/suvojeet-sengupta/device_xiaomi_redwood-kernel-6.18)).
+([device_xiaomi_redwood-kernel-6.18](https://github.com/suvojeet-sengupta/device_xiaomi_redwood-kernel-6.18)),
+with the vendor blobs from
+[android_vendor_xiaomi_redwood_pixelos](https://github.com/suvojeet-sengupta/android_vendor_xiaomi_redwood_pixelos),
+Dolby from [hardware_dolby](https://github.com/suvojeet-sengupta/hardware_dolby)
+and the MIUI camera from
+[redwood_miuicamera](https://github.com/genie1997/redwood_miuicamera).
 
-`.repo/local_manifests/redwood.xml`:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-  <remote name="redwood" fetch="https://github.com" />
-  <project name="suvojeet-sengupta/android_device_xiaomi_redwood_pixelos" path="device/xiaomi/redwood" remote="redwood" revision="seventeen" />
-  <project name="suvojeet-sengupta/device_xiaomi_redwood-kernel-6.18" path="device/xiaomi/redwood-kernel-6.18" remote="redwood" revision="main" />
-  <project name="BlueHeart01/android_vendor_xiaomi_redwood" path="vendor/xiaomi/redwood" remote="redwood" revision="17" clone-depth="1" />
-  <project name="BlueHeart01/redwood_hardware_dolby" path="hardware/dolby" remote="redwood" revision="moto-1.0" />
-  <project name="LineageOS/android_hardware_xiaomi" path="hardware/xiaomi" remote="redwood" revision="lineage-24.0" />
-</manifest>
-```
+The `seventeen-setup` branch has the local manifest and the scripts:
 
 ```bash
 repo init -u https://github.com/PixelOS-AOSP/android_manifest.git -b seventeen --git-lfs
 repo sync -c -j8 --force-sync --no-tags
-source build/envsetup.sh
-lunch custom_redwood-cp2a-userdebug
-m pixelos
+git clone -b seventeen-setup https://github.com/suvojeet-sengupta/android_device_xiaomi_redwood_pixelos ~/redwood-pixelos-setup
+~/redwood-pixelos-setup/setup.sh
+~/redwood-pixelos-setup/build.sh -i
 ```
 
 KernelSU, KernelSU Next and KowSU patch the boot image with their
