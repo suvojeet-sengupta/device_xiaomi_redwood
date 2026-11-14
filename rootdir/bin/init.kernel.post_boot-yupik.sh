@@ -339,8 +339,9 @@ do
 	done
 done
 
-# Enable sleep and set deep as default suspend mode
-echo deep > /sys/power/mem_sleep
+# Suspend with s2idle: deep goes through PSCI SYSTEM_SUSPEND, which never
+# reaches AOSS sleep, CX collapse or DDR self-refresh here
+echo s2idle > /sys/power/mem_sleep
 
 configure_memory_parameters
 
