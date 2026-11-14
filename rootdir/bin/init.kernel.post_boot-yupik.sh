@@ -114,18 +114,15 @@ function configure_memory_parameters() {
 	configure_read_ahead_kb_values
 	echo 80 > /proc/sys/vm/swappiness
 
-        # Disable wsf  beacause we are using efk.
-        # wsf Range : 1..1000. So set to bare minimum value 1.
-        echo 1 > /proc/sys/vm/watermark_scale_factor
+	# GKI has no extra_free_kbytes, so wsf is what wakes kswapd early.
+	# 1 left only an 8 MB gap and app launches fell into direct reclaim.
+	echo 200 > /proc/sys/vm/watermark_scale_factor
 
 	MemTotalStr=`cat /proc/meminfo | grep MemTotal`
 	MemTotal=${MemTotalStr:16:8}
 	if [ $MemTotal -le 8388608 ]; then
 		echo 0 > /proc/sys/vm/watermark_boost_factor
 	fi
-
-	#Spawn kswapd threads which can help in fast reclaiming of pages
-	echo 1 > /proc/sys/vm/kswapd_threads
 }
 
 rev=`cat /sys/devices/soc0/revision`
