@@ -321,6 +321,8 @@ vendor/lib64/libarcsoft_qnnhtp.so
 vendor/lib64/libarcsoft_super_night_raw.so
 
 # Camera camerax
+# 32-bit copy from lisa (TheMuppets lineage-23.2): redwood ships only lib64, and the 32-bit mediaserver gralloc needs it for camera formats
+vendor/lib/libcamxexternalformatutils.so|871d71d04814644ae63cac51211802db5138b600
 vendor/lib64/libcamxexternalformatutils.so
 vendor/lib64/libcamxfacialfeatures.so
 vendor/lib64/libcamxfdalgo.so
