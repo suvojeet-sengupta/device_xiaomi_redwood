@@ -50,3 +50,5 @@ set_prop(hal_power_default, vendor_power_prop)
 # Allow hal_power to access IThermal AIDL
 allow hal_power_default hal_thermal_service:service_manager find;
 hal_client_domain(hal_power_default, hal_thermal)
+
+allow hal_power_default self:capability sys_nice;
