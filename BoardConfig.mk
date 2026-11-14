@@ -57,6 +57,12 @@ TARGET_NO_BOOTLOADER := true
 # Display
 TARGET_SCREEN_DENSITY ?= 440
 
+# Use the gralloc handle layout of the AOSPA tree, where 240 fps slow motion
+# works with the same CamX blobs
+TARGET_GRALLOC_HANDLE_HAS_RESERVED_SIZE := true
+TARGET_GRALLOC_HANDLE_HAS_CUSTOM_CONTENT_MD_RESERVED_SIZE := true
+TARGET_GRALLOC_HANDLE_HAS_UBWCP_FORMAT := true
+
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/configs/config.fs
 
