@@ -48,7 +48,7 @@ vendor.audio.adm.buffering.ms=6
 vendor.audio.enable.mirrorlink=false
 vendor.audio.feature.a2dp_offload.enable=true
 vendor.audio.feature.afe_proxy.enable=true
-vendor.audio.feature.battery_listener.enable=true
+vendor.audio.feature.battery_listener.enable=false
 vendor.audio.feature.compress_in.enable=true
 vendor.audio.feature.compress_meta_data.enable=true
 vendor.audio.feature.concurrent_capture.enable=true
@@ -211,7 +211,10 @@ debug.sdm.support_writeback=0
 # Media
 debug.stagefright.c2inputsurface=-1
 media.stagefright.thumbnail.prefer_hw_codecs=true
-ro.config.vc_call_vol_steps=11
+# The audio HAL maps the call volume onto this many voice volume steps
+# (it never read ro.vendor.audio.voice.dsp_vol_steps); the earpiece
+# calibration only knows 0 to 5
+ro.config.vc_call_vol_steps=5
 
 # NFC
 ro.vendor.nfc.repair=1
