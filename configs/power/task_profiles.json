@@ -1,0 +1,18 @@
+{
+  "Profiles": [
+    {
+      "Name": "SCHED_QOS_NONE",
+      "Actions": []
+    }
+  ],
+  "AggregateProfiles": [
+    {
+      "Name": "SCHED_QOS_SENSITIVE_EXTREME",
+      "Profiles": [ "MaxPerformance", "ProcessCapacityMax" ]
+    },
+    {
+      "Name": "SCHED_QOS_SENSITIVE_STANDARD",
+      "Profiles": [ "ProcessCapacityMax" ]
+    }
+  ]
+}
