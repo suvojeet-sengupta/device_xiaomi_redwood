@@ -511,7 +511,9 @@ PRODUCT_PACKAGES += \
     thermal_symlinks
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/thermal/thermal_info_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json
+    $(LOCAL_PATH)/configs/thermal/thermal_info_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json \
+    $(LOCAL_PATH)/configs/thermal/mi_thermald/thermal-normal.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-redwood/thermal-normal.conf \
+    $(LOCAL_PATH)/configs/thermal/mi_thermald/thermal-india-normal.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-redwood/thermal-india-normal.conf
 
 # Touchscreen
 PRODUCT_COPY_FILES += \

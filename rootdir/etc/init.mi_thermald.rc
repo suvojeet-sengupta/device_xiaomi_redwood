@@ -1,3 +1,13 @@
+on post-fs-data
+    mkdir /data/vendor/thermal 0771 root system
+    mkdir /data/vendor/thermal/config 0771 root system
+    copy /vendor/etc/thermal-redwood/thermal-normal.conf /data/vendor/thermal/config/thermal-normal.conf
+    copy /vendor/etc/thermal-redwood/thermal-india-normal.conf /data/vendor/thermal/config/thermal-india-normal.conf
+    chown system system /data/vendor/thermal/config/thermal-normal.conf
+    chown system system /data/vendor/thermal/config/thermal-india-normal.conf
+    chmod 0644 /data/vendor/thermal/config/thermal-normal.conf
+    chmod 0644 /data/vendor/thermal/config/thermal-india-normal.conf
+
 on charger
     wait /sys/class/power_supply/usb/type
     start vendor.mi_thermald
