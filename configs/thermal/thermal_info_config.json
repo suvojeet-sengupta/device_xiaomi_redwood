@@ -299,5 +299,22 @@
             "Multiplier": 0.001
         }
     ],
-    "CoolingDevices": []
+    "CoolingDevices": [
+        {
+            "Name": "cpufreq-cpu0",
+            "Type": "CPU"
+        },
+        {
+            "Name": "cpufreq-cpu4",
+            "Type": "CPU"
+        },
+        {
+            "Name": "cpufreq-cpu7",
+            "Type": "CPU"
+        },
+        {
+            "Name": "gpu",
+            "Type": "GPU"
+        }
+    ]
 }
