@@ -125,49 +125,10 @@ function configure_memory_parameters() {
 	fi
 }
 
-rev=`cat /sys/devices/soc0/revision`
-ddr_type=`od -An -tx /proc/device-tree/memory/ddr_device_type`
-ddr_type4="07"
-ddr_type5="08"
-
-# Core control parameters for gold
-# Prefer CPU4 for isolation based on the thermal characteristics.
-echo 1 0 0 > /sys/devices/system/cpu/cpu4/core_ctl/not_preferred
-echo 2 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus
-echo 60 > /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres
-echo 30 > /sys/devices/system/cpu/cpu4/core_ctl/busy_down_thres
-echo 100 > /sys/devices/system/cpu/cpu4/core_ctl/offline_delay_ms
-echo 3 > /sys/devices/system/cpu/cpu4/core_ctl/task_thres
-
-# Core control parameters for gold+
-echo 0 > /sys/devices/system/cpu/cpu7/core_ctl/min_cpus
-echo 60 > /sys/devices/system/cpu/cpu7/core_ctl/busy_up_thres
-echo 30 > /sys/devices/system/cpu/cpu7/core_ctl/busy_down_thres
-echo 100 > /sys/devices/system/cpu/cpu7/core_ctl/offline_delay_ms
-echo 1 > /sys/devices/system/cpu/cpu7/core_ctl/task_thres
-
-# Controls how many more tasks should be eligible to run on gold CPUs
-# w.r.t number of gold CPUs available to trigger assist (max number of
-# tasks eligible to run on previous cluster minus number of CPUs in
-# the previous cluster).
-#
-# Setting to 1 by default which means there should be at least
-# 4 tasks eligible to run on gold cluster (tasks running on gold cores
-# plus misfit tasks on silver cores) to trigger assitance from gold+.
-echo 1 > /sys/devices/system/cpu/cpu7/core_ctl/nr_prev_assist_thresh
-
-# Disable Core control on silver
-echo 0 > /sys/devices/system/cpu/cpu0/core_ctl/enable
-
-# Setting b.L scheduler parameters
-echo 71 95 > /proc/sys/kernel/sched_upmigrate
-echo 65 85 > /proc/sys/kernel/sched_downmigrate
-echo 100 > /proc/sys/kernel/sched_group_upmigrate
-echo 85 > /proc/sys/kernel/sched_group_downmigrate
-echo 1 > /proc/sys/kernel/sched_walt_rotate_big_tasks
-
-
-echo 0 > /proc/sys/kernel/sched_coloc_busy_hysteresis_enable_cpus
+# The 6.18 kernel schedules with PELT, schedutil and the CASS module. WALT,
+# core control, input boost and the WALT schedutil tunables don't exist.
+# Memory and L3 DCVS come from the device tree (bus_dcvs), the 5.4 memlat
+# and bw_hwmon devfreq nodes are gone.
 
 # cpuset parameters
 echo 0-1 > /dev/cpuset/background/cpus
@@ -175,166 +136,13 @@ echo 0-3 > /dev/cpuset/restricted/cpus
 echo 0-2 > /dev/cpuset/system-background/cpus
 echo 0-6 > /dev/cpuset/foreground/cpus
 
-# configure governor settings for silver cluster
-echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
-echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/down_rate_limit_us
-echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/up_rate_limit_us
-echo 1152000 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_freq
+for policy in /sys/devices/system/cpu/cpufreq/policy*; do
+	echo "schedutil" > $policy/scaling_governor
+done
+
 echo 691200 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
-echo 1 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/pl
-
-# configure input boost settings
-echo "0:1324800" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
-echo 200 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
-
-# configure governor settings for gold cluster
-echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy4/scaling_governor
-echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/down_rate_limit_us
-echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/up_rate_limit_us
-echo 1228800 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_freq
 echo 691200 > /sys/devices/system/cpu/cpufreq/policy4/scaling_min_freq
-echo 85 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_load
-echo -6 > /sys/devices/system/cpu/cpu4/sched_load_boost
-echo -6 > /sys/devices/system/cpu/cpu5/sched_load_boost
-echo -6 > /sys/devices/system/cpu/cpu6/sched_load_boost
-echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/rtg_boost_freq
-echo 1 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/pl
-
-# configure governor settings for gold+ cluster
-echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy7/scaling_governor
-echo 0 > /sys/devices/system/cpu/cpufreq/policy7/schedutil/down_rate_limit_us
-echo 0 > /sys/devices/system/cpu/cpufreq/policy7/schedutil/up_rate_limit_us
-echo 1324800 > /sys/devices/system/cpu/cpufreq/policy7/schedutil/hispeed_freq
 echo 806400 > /sys/devices/system/cpu/cpufreq/policy7/scaling_min_freq
-echo 85 > /sys/devices/system/cpu/cpufreq/policy7/schedutil/hispeed_load
-echo -6 > /sys/devices/system/cpu/cpu7/sched_load_boost
-echo 0 > /sys/devices/system/cpu/cpufreq/policy7/schedutil/rtg_boost_freq
-echo 1 > /sys/devices/system/cpu/cpufreq/policy7/schedutil/pl
-
-# colocation V3 settings
-echo 691200 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/rtg_boost_freq
-echo 51 > /proc/sys/kernel/sched_min_task_util_for_boost
-echo 35 > /proc/sys/kernel/sched_min_task_util_for_colocation
-echo 20000000 > /proc/sys/kernel/sched_task_unfilter_period
-
-# Enable conservative pl
-echo 1 > /proc/sys/kernel/sched_conservative_pl
-
-# configure RIMPS for L3 DCVS
-for c0_rimps_l3 in /sys/devices/system/cpu/memlat/c0_memlat/cpu0-cpu-l3-lat
-do
-	cat $c0_rimps_l3/available_frequencies | cut -d " " -f 1 > $c0_rimps_l3/min_freq
-	echo 400 > $c0_rimps_l3/ratio_ceil
-	echo 3 > $c0_rimps_l3/sample_ms
-done
-
-for c4_rimps_l3 in /sys/devices/system/cpu/memlat/c4_memlat/cpu4-cpu-l3-lat
-do
-	cat $c4_rimps_l3/available_frequencies | cut -d " " -f 1 > $c4_rimps_l3/min_freq
-	echo 4000 > $c4_rimps_l3/ratio_ceil
-	echo 3 > $c4_rimps_l3/sample_ms
-	echo 60 > $c4_rimps_l3/l2wb_pct
-	echo 25000 > $c4_rimps_l3/l2wb_filter
-done
-
-for c7_rimps_l3 in /sys/devices/system/cpu/memlat/c7_memlat/cpu7-cpu-l3-lat
-do
-	cat $c7_rimps_l3/available_frequencies | cut -d " " -f 1 > $c7_rimps_l3/min_freq
-	echo 20000 > $c7_rimps_l3/ratio_ceil
-	echo 3 > $c7_rimps_l3/sample_ms
-	echo 60 > $c7_rimps_l3/l2wb_pct
-	echo 25000 > $c7_rimps_l3/l2wb_filter
-done
-
-
-# configure bus-dcvs
-for device in /sys/devices/platform/soc
-do
-	for cpubw in $device/*cpu-cpu-llcc-bw/devfreq/*cpu-cpu-llcc-bw
-	do
-		cat $cpubw/available_frequencies | cut -d " " -f 1 > $cpubw/min_freq
-		echo "2288 4577 7110 9155 12298 14236 15258" > $cpubw/bw_hwmon/mbps_zones
-		echo 4 > $cpubw/bw_hwmon/sample_ms
-		echo 68 > $cpubw/bw_hwmon/io_percent
-		echo 20 > $cpubw/bw_hwmon/hist_memory
-		echo 0 > $cpubw/bw_hwmon/hyst_length
-		echo 80 > $cpubw/bw_hwmon/down_thres
-		echo 0 > $cpubw/bw_hwmon/guard_band_mbps
-		echo 250 > $cpubw/bw_hwmon/up_scale
-		echo 1600 > $cpubw/bw_hwmon/idle_mbps
-		echo 40 > $cpubw/polling_interval
-	done
-
-	for llccbw in $device/*cpu-llcc-ddr-bw/devfreq/*cpu-llcc-ddr-bw
-	do
-		cat $llccbw/available_frequencies | cut -d " " -f 1 > $llccbw/min_freq
-		if [ ${ddr_type:4:2} == $ddr_type4 ]; then
-			echo "1144 1720 2086 2929 3879 5931 6515 8136" > $llccbw/bw_hwmon/mbps_zones
-		elif [ ${ddr_type:4:2} == $ddr_type5 ]; then
-			echo "1144 1720 2086 2929 3879 5931 6515 7980 12191" > $llccbw/bw_hwmon/mbps_zones
-		fi
-		echo 4 > $llccbw/bw_hwmon/sample_ms
-		echo 68 > $llccbw/bw_hwmon/io_percent
-		echo 20 > $llccbw/bw_hwmon/hist_memory
-		echo 0 > $llccbw/bw_hwmon/hyst_length
-		echo 80 > $llccbw/bw_hwmon/down_thres
-		echo 0 > $llccbw/bw_hwmon/guard_band_mbps
-		echo 250 > $llccbw/bw_hwmon/up_scale
-		echo 1600 > $llccbw/bw_hwmon/idle_mbps
-		echo 48 > $llccbw/polling_interval
-	done
-
-	for l3bw in $device/*snoop-l3-bw/devfreq/*snoop-l3-bw
-	do
-		cat $l3bw/available_frequencies | cut -d " " -f 1 > $l3bw/min_freq
-		echo 4 > $l3bw/bw_hwmon/sample_ms
-		echo 10 > $l3bw/bw_hwmon/io_percent
-		echo 20 > $l3bw/bw_hwmon/hist_memory
-		echo 10 > $l3bw/bw_hwmon/hyst_length
-		echo 0 > $l3bw/bw_hwmon/down_thres
-		echo 0 > $l3bw/bw_hwmon/guard_band_mbps
-		echo 0 > $l3bw/bw_hwmon/up_scale
-		echo 1600 > $l3bw/bw_hwmon/idle_mbps
-		echo 9155 > $l3bw/max_freq
-		echo 40 > $l3bw/polling_interval
-	done
-
-	# configure mem_latency settings for LLCC and DDR scaling and qoslat
-	for memlat in $device/*lat/devfreq/*lat
-	do
-		cat $memlat/available_frequencies | cut -d " " -f 1 > $memlat/min_freq
-		echo 8 > $memlat/polling_interval
-		echo 400 > $memlat/mem_latency/ratio_ceil
-	done
-
-	# configure compute settings for silver latfloor
-	for latfloor in $device/*cpu0-cpu*latfloor/devfreq/*cpu0-cpu*latfloor
-	do
-		cat $latfloor/available_frequencies | cut -d " " -f 1 > $latfloor/min_freq
-		echo 8 > $latfloor/polling_interval
-	done
-
-	# configure compute settings for gold latfloor
-	for latfloor in $device/*cpu4-cpu*latfloor/devfreq/*cpu4-cpu*latfloor
-	do
-		cat $latfloor/available_frequencies | cut -d " " -f 1 > $latfloor/min_freq
-		echo 8 > $latfloor/polling_interval
-	done
-
-        # configure mem_latency settings for prime latfloor
-	for latfloor in $device/*cpu7-cpu*latfloor/devfreq/*cpu7-cpu*latfloor
-	do
-		cat $latfloor/available_frequencies | cut -d " " -f 1 > $latfloor/min_freq
-		echo 8 > $latfloor/polling_interval
-		echo 25000 > $latfloor/mem_latency/ratio_ceil
-	done
-
-	# qoslat ratio ceil
-	for qoslat in $device/*qoslat/devfreq/*qoslat
-	do
-	    echo 50 > $qoslat/mem_latency/ratio_ceil
-	done
-done
 
 # Suspend with s2idle: deep goes through PSCI SYSTEM_SUSPEND, which never
 # reaches AOSS sleep, CX collapse or DDR self-refresh here
