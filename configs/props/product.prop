@@ -12,4 +12,6 @@ persist.sys.disable_rescue=true
 persist.sys.fuse.passthrough.enable=true
 
 # LMK tuning
-ro.lmk.swap_free_low_percentage=100
+ro.lmk.swap_free_low_percentage=10
+ro.lmk.swap_compression_ratio=3
+ro.lmk.lowmem_min_oom_score=951
