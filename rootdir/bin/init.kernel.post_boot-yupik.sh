@@ -112,7 +112,9 @@ function configure_memory_parameters() {
 
 	configure_zram_parameters
 	configure_read_ahead_kb_values
-	echo 80 > /proc/sys/vm/swappiness
+	# Reclaim anon into zram as readily as file pages, so app code
+	# and libraries stay cached instead of being read back from UFS
+	echo 100 > /proc/sys/vm/swappiness
 
 	# GKI has no extra_free_kbytes, so wsf is what wakes kswapd early.
 	# 1 left only an 8 MB gap and app launches fell into direct reclaim.
