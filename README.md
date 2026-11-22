@@ -28,6 +28,24 @@ git clone -b seventeen-setup https://github.com/suvojeet-sengupta/device_xiaomi_
 another release config (default `cp2a`). Use `-i` for every build you
 publish: an incremental build keeps the old build date.
 
+## Signing
+
+Every build is signed with the release keys in `~/keys` (set `KEYS_DIR` for
+another directory): the APKs, every APEX with the key of its own name, the
+OTA package and the images. `build.sh` stops if the directory has no
+`releasekey` and `platform` key, and checks that the finished zip carries
+`releasekey`. Recovery only installs a zip signed with the key of the
+build it runs, so don't mix release-key and test-key builds.
+
+| Option | What it does |
+| --- | --- |
+| `-t` | Build with the AOSP test keys, no key directory needed |
+| `-S` | Don't build, sign the last build again |
+
+The tree root then holds `PixelOS_<version>.zip` for recovery,
+`PixelOS_<version>-fastboot.zip` for `fastboot update`, a `.sha256` for each,
+and `images/` with boot, vendor_boot and dtbo from the signed build.
+
 ## Root
 
 KernelSU, KernelSU Next and KowSU patch the boot image with their
