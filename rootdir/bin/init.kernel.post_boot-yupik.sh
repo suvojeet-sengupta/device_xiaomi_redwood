@@ -34,17 +34,12 @@ function configure_zram_parameters() {
 	MemTotalStr=`cat /proc/meminfo | grep MemTotal`
 	MemTotal=${MemTotalStr:16:8}
 
-	# Zram disk - 75% for Go and < 2GB devices .
-	# For >2GB Non-Go devices, size = 50% of RAM size. Limit the size to 4GB.
-	# And enable lz4 zram compression for Go targets.
+	# Zram disk - 75% of RAM, limited to 4GB. lz4 packs about 3:1 here, and
+	# half of a 6GB phone ran 80% full under normal use.
 
 	let RamSizeGB="( $MemTotal / 1048576 ) + 1"
 	diskSizeUnit=M
-	if [ $RamSizeGB -le 2 ]; then
-		let zRamSizeMB="( $RamSizeGB * 1024 ) * 3 / 4"
-	else
-		let zRamSizeMB="( $RamSizeGB * 1024 ) / 2"
-	fi
+	let zRamSizeMB="( $RamSizeGB * 1024 ) * 3 / 4"
 
 	# use MB avoid 32 bit overflow
 	if [ $zRamSizeMB -gt 4096 ]; then
