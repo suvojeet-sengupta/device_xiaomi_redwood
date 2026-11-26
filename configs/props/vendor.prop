@@ -287,5 +287,18 @@ wifi.aware.interface=wifi-aware0
 # WiFi Display
 vendor.sys.video.disable.ubwc=1
 
+# ZRAM
+mmd.zram.enabled=true
+mmd.zram.size=75%
+mmd.zram.comp_algorithm=lz4
+mmd.zram.device_priority=32758
+mmd.zram.recompression.enabled=true
+mmd.zram.recompression.algorithm=zstd
+mmd.zram.writeback.enabled=true
+mmd.zram.writeback.device_size=2147483648
+mmd.zram.writeback.max_bytes_per_day=4294967296
+mmd.zram.writeback.use_nr_tags_prop=true
+mmd.zram.writeback.nr_tags=31
+
 # Zygote
 zygote.critical_window.minute=10

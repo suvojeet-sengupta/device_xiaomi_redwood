@@ -30,44 +30,6 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #=============================================================================
 
-function configure_zram_parameters() {
-	MemTotalStr=`cat /proc/meminfo | grep MemTotal`
-	MemTotal=${MemTotalStr:16:8}
-
-	# Zram disk - 75% of RAM, limited to 4GB. lz4 packs about 3:1 here, and
-	# half of a 6GB phone ran 80% full under normal use.
-
-	let RamSizeGB="( $MemTotal / 1048576 ) + 1"
-	diskSizeUnit=M
-	let zRamSizeMB="( $RamSizeGB * 1024 ) * 3 / 4"
-
-	# use MB avoid 32 bit overflow
-	if [ $zRamSizeMB -gt 4096 ]; then
-		let zRamSizeMB=4096
-	fi
-
-	echo lz4 > /sys/block/zram0/comp_algorithm
-
-	if [ -f /sys/block/zram0/disksize ]; then
-		if [ -f /sys/block/zram0/use_dedup ]; then
-			echo 1 > /sys/block/zram0/use_dedup
-		fi
-		echo "$zRamSizeMB""$diskSizeUnit" > /sys/block/zram0/disksize
-
-		# ZRAM may use more memory than it saves if SLAB_STORE_USER
-		# debug option is enabled.
-		if [ -e /sys/kernel/slab/zs_handle ]; then
-			echo 0 > /sys/kernel/slab/zs_handle/store_user
-		fi
-		if [ -e /sys/kernel/slab/zspage ]; then
-			echo 0 > /sys/kernel/slab/zspage/store_user
-		fi
-
-		mkswap /dev/block/zram0
-		swapon /dev/block/zram0 -p 32758
-	fi
-}
-
 function configure_read_ahead_kb_values() {
 	dmpts=$(ls /sys/block/*/queue/read_ahead_kb | grep -e dm -e mmc)
 	ra_kb=128
@@ -105,7 +67,6 @@ function configure_memory_parameters() {
 
 	ProductName=`getprop ro.product.name`
 
-	configure_zram_parameters
 	configure_read_ahead_kb_values
 	# Reclaim anon into zram as readily as file pages, so app code
 	# and libraries stay cached instead of being read back from UFS
