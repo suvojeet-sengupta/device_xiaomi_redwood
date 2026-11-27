@@ -37,7 +37,8 @@ grep -q "redwood-kernel-6.18" device/xiaomi/redwood/BoardConfig.mk ||
 [ -f device/xiaomi/redwood-kernel-6.18/Image ] || die "no 6.18 kernel prebuilt, run setup.sh first"
 
 keys=vendor/lineage-priv/keys
-for f in keys.mk releasekey.pk8 releasekey.x509.pem platform.pk8; do
+# SELinux keys.conf needs testkey.x509.pem as well
+for f in keys.mk releasekey.pk8 releasekey.x509.pem platform.pk8 testkey.x509.pem; do
     [ -f "$keys/$f" ] || die "no $keys/$f, run setup.sh first"
 done
 
