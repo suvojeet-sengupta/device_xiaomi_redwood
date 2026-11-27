@@ -5,6 +5,6 @@ persist.vendor.btstack.enable.lpa=true
 ro.launcher.blur.appLaunch=0
 ro.sf.blurs_are_expensive=1
 
-# Charging modes, off until they're turned on in the battery settings
+# Charging modes from the battery settings: smart charging on by default
 persist.sys.force_fast_charge=0
-persist.sys.smart_charging=0
+persist.sys.smart_charging=1

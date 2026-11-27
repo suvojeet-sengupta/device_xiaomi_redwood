@@ -1,14 +1,15 @@
 # Charging modes from the battery settings. The charger firmware in the ADSP
 # keeps them only while it runs, so write them again once boot completes.
 #
-# Smart charging: night_charging makes the charger stop at 80%.
+# Smart charging: smart_batt turns on the charger's own smart charging, on by
+# default.
 # Force fast charging: thermal_remove makes it ignore the thermal current
 # limits that otherwise slow charging while the phone is warm or in use.
 on property:sys.boot_completed=1 && property:persist.sys.smart_charging=1
-    write /sys/class/qcom-battery/night_charging 1
+    write /sys/class/qcom-battery/smart_batt 1
 
 on property:sys.boot_completed=1 && property:persist.sys.smart_charging=0
-    write /sys/class/qcom-battery/night_charging 0
+    write /sys/class/qcom-battery/smart_batt 0
 
 on property:sys.boot_completed=1 && property:persist.sys.force_fast_charge=1
     write /sys/class/qcom-battery/thermal_remove 1

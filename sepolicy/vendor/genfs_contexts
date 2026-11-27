@@ -9,7 +9,7 @@ genfscon sysfs /devices/platform/soc/soc:qcom,pmic_glink/soc:qcom,pmic_glink:qco
 
 # Health
 genfscon sysfs /class/qcom-battery/input_suspend u:object_r:vendor_sysfs_battery_supply:s0
-genfscon sysfs /class/qcom-battery/night_charging u:object_r:vendor_sysfs_battery_supply:s0
+genfscon sysfs /class/qcom-battery/smart_batt u:object_r:vendor_sysfs_battery_supply:s0
 genfscon sysfs /class/qcom-battery/thermal_remove u:object_r:vendor_sysfs_battery_supply:s0
 
 # Torch control
