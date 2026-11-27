@@ -578,6 +578,16 @@
     <!-- Doze: should the TYPE_PICK_UP_GESTURE sensor be used as a pulse signal. -->
     <bool name="config_dozePulsePickup">true</bool>
 
+    <!-- Back gesture edge width levels for the back sensitivity sliders: AOSP's three
+         plus two more sensitive ones, for a back swipe that starts further in. -->
+    <array name="config_backGestureInsetScales">
+        <item>0.60</item>
+        <item>1.00</item>
+        <item>1.33</item>
+        <item>1.66</item>
+        <item>2.00</item>
+    </array>
+
     <!-- Low Power Standby blocks the wakelocks and network access of background apps while
          the device is idle; Play services push stays allowed. Offer it, but leave it off
          until it's switched on. -->
