@@ -4,6 +4,13 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+# userdebug builds are for chasing bugs: keep them debuggable, with root ADB
+# and no ADB authorization, so a boot that never finishes can still be read
+# with adb logcat. Lineage turns debugging off in userdebug otherwise.
+ifeq ($(TARGET_BUILD_VARIANT),userdebug)
+WITH_ADB_INSECURE := true
+endif
+
 # Inherit from redwood device
 $(call inherit-product, device/xiaomi/redwood/device.mk)
 
