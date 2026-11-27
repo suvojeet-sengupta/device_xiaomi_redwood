@@ -1,2 +1,5 @@
 # Charging modes from the battery settings, written by init.redwood.charging.rc
 allow init vendor_sysfs_battery_supply:file w_file_perms;
+
+# Touch game mode from the display settings, written by init.redwood.touch.rc
+allow init vendor_sysfs_touch_mode:file w_file_perms;

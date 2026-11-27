@@ -286,7 +286,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/init.redwood.charging.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.redwood.charging.rc \
     $(LOCAL_PATH)/rootdir/etc/init.redwood.mglru.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.redwood.mglru.rc \
-    $(LOCAL_PATH)/rootdir/etc/init.redwood.panic.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.redwood.panic.rc
+    $(LOCAL_PATH)/rootdir/etc/init.redwood.panic.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.redwood.panic.rc \
+    $(LOCAL_PATH)/rootdir/etc/init.redwood.touch.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.redwood.touch.rc
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/bin/init.kernel.post_boot-yupik.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.kernel.post_boot-yupik.sh \
@@ -528,6 +529,12 @@ PRODUCT_COPY_FILES += \
 # Touchscreen
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
+
+# High touch polling rate switches the Goodix panel between 240 and 480 Hz
+PRODUCT_PACKAGES += \
+    vendor.lineage.touch-service.xiaomi
+
+$(call soong_config_set,XIAOMI_TOUCH,HIGH_TOUCH_POLLING_PATH,/sys/devices/platform/soc/a94000.spi/spi_master/spi0/spi0.0/switch_report_rate)
 
 # Ueventd
 PRODUCT_COPY_FILES += \

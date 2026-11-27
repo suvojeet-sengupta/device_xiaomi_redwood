@@ -8,3 +8,6 @@ ro.sf.blurs_are_expensive=1
 # Charging modes from the battery settings: smart charging on by default
 persist.sys.force_fast_charge=0
 persist.sys.smart_charging=1
+
+# Touch game mode from the display settings, off by default
+persist.sys.touch_game_mode=0

@@ -5,3 +5,4 @@ type powerhal_vendor_data_file, file_type, data_file_type;
 
 # Thermal HAL
 type thermal_link_device, dev_type;
+type vendor_sysfs_touch_mode, fs_type, sysfs_type;

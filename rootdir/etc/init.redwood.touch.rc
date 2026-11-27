@@ -1,0 +1,8 @@
+# Touch game mode from the display settings: the Goodix controller answers
+# faster and filters less. The driver starts with it off, so write it again
+# once boot completes. A FocalTech panel has no game_mode node.
+on property:sys.boot_completed=1 && property:persist.sys.touch_game_mode=1
+    write /sys/devices/platform/soc/a94000.spi/spi_master/spi0/spi0.0/game_mode 1
+
+on property:sys.boot_completed=1 && property:persist.sys.touch_game_mode=0
+    write /sys/devices/platform/soc/a94000.spi/spi_master/spi0/spi0.0/game_mode 0
