@@ -578,6 +578,12 @@
     <!-- Doze: should the TYPE_PICK_UP_GESTURE sensor be used as a pulse signal. -->
     <bool name="config_dozePulsePickup">true</bool>
 
+    <!-- Low Power Standby blocks the wakelocks and network access of background apps while
+         the device is idle; Play services push stays allowed. Offer it, but leave it off
+         until it's switched on. -->
+    <bool name="config_lowPowerStandbySupported">true</bool>
+    <bool name="config_lowPowerStandbyEnabledByDefault">false</bool>
+
     <!-- If true, the display will be shifted around in ambient mode. -->
     <bool name="config_enableBurnInProtection">true</bool>
 
