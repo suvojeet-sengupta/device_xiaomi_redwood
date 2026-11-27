@@ -24,4 +24,8 @@
     <!-- Location on the screen of the center of the physical power button. This is a reasonable
     default that should be overridden by device-specific overlays. -->
     <dimen name="physical_power_button_center_screen_location_y">1030px</dimen>
+
+    <!-- Blur behind the open shade. SystemUI keeps animating it while the shade is open, so
+     every frame is a GPU blur pass; half the default 34dp keeps the look and cuts the work. -->
+    <dimen name="max_shade_window_blur_radius">17dp</dimen>
 </resources>
