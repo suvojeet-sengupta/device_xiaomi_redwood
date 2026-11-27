@@ -56,6 +56,12 @@ persist.vendor.vonr_setting_support=1
 # Render
 debug.cpurend.vsync=false
 
+# Satellite: redwood has no satellite modem, so drop the logs of the
+# per-service-state satellite checks
+log.tag.SatelliteController=S
+log.tag.SatelliteTileStateReceiver=S
+log.tag.TelephonyConfigUpdateInstallReceiver=S
+
 # Sensors
 persist.vendor.sensors.enable.mag_filter=true
 
