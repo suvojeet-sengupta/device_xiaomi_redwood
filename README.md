@@ -30,21 +30,21 @@ publish: an incremental build keeps the old build date.
 
 ## Signing
 
-Every build is signed with the release keys in `~/keys` (set `KEYS_DIR` for
-another directory): the APKs, every APEX with the key of its own name, the
-OTA package and the images. `build.sh` stops if the directory has no
-`releasekey` and `platform` key, and checks that the finished zip carries
-`releasekey`. Recovery only installs a zip signed with the key of the
-build it runs, so don't mix release-key and test-key builds.
-
-| Option | What it does |
-| --- | --- |
-| `-t` | Build with the AOSP test keys, no key directory needed |
-| `-S` | Don't build, sign the last build again |
+The build signs itself with the release keys: `setup.sh` clones the private
+[keys](https://github.com/suvojeet-sengupta/keys) repo to
+`vendor/lineage-priv/keys` (set `KEYS_REPO` for another one; git needs
+credentials for it), and its `keys.mk` makes `releasekey` the default
+certificate. Every APK and APEX, the OTA package and the images come out
+signed and tagged `release-keys`, with no re-signing afterwards. `build.sh`
+stops if the keys are missing or the build would sign with anything else,
+checks that the finished zip carries `releasekey`, and lists any APEX that
+has no key in the repo and kept its test key. Recovery only installs a zip
+signed with the key of the build it runs, so don't mix release-key and
+test-key builds.
 
 The tree root then holds `PixelOS_<version>.zip` for recovery,
 `PixelOS_<version>-fastboot.zip` for `fastboot update`, a `.sha256` for each,
-and `images/` with boot, vendor_boot and dtbo from the signed build.
+and `images/` with boot, vendor_boot and dtbo.
 
 ## Root
 
