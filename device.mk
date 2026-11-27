@@ -284,6 +284,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/init.target.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.target.rc
 
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/etc/init.redwood.charging.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.redwood.charging.rc \
     $(LOCAL_PATH)/rootdir/etc/init.redwood.mglru.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.redwood.mglru.rc \
     $(LOCAL_PATH)/rootdir/etc/init.redwood.panic.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.redwood.panic.rc
 

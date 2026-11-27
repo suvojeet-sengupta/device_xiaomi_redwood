@@ -9,6 +9,8 @@ genfscon sysfs /devices/platform/soc/soc:qcom,pmic_glink/soc:qcom,pmic_glink:qco
 
 # Health
 genfscon sysfs /class/qcom-battery/input_suspend u:object_r:vendor_sysfs_battery_supply:s0
+genfscon sysfs /class/qcom-battery/night_charging u:object_r:vendor_sysfs_battery_supply:s0
+genfscon sysfs /class/qcom-battery/thermal_remove u:object_r:vendor_sysfs_battery_supply:s0
 
 # Torch control
 genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-02/c440000.qcom,spmi:qcom,pm8350c@2:qcom,flash_led@ee00/leds/led:torch_0/brightness u:object_r:sysfs_torch:s0

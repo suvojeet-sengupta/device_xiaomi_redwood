@@ -4,3 +4,7 @@ persist.vendor.btstack.enable.lpa=true
 # Blur, set here since vendor_init may not set these
 ro.launcher.blur.appLaunch=0
 ro.sf.blurs_are_expensive=1
+
+# Charging modes, off until they're turned on in the battery settings
+persist.sys.force_fast_charge=0
+persist.sys.smart_charging=0
