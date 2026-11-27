@@ -26,6 +26,6 @@
     <dimen name="physical_power_button_center_screen_location_y">1030px</dimen>
 
     <!-- Blur behind the open shade. SystemUI keeps animating it while the shade is open, so
-     every frame is a GPU blur pass; half the default 34dp keeps the look and cuts the work. -->
-    <dimen name="max_shade_window_blur_radius">17dp</dimen>
+     every frame is a GPU blur pass; 10dp, under a third of the default 34dp, keeps a light blur and cuts the work. -->
+    <dimen name="max_shade_window_blur_radius">10dp</dimen>
 </resources>
