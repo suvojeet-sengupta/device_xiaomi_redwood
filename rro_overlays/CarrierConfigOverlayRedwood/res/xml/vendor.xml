@@ -2337,6 +2337,17 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
     </carrier_config>
 
+    <!-- 5G signal bars: AOSP wants -65 dBm SS-RSRP for 4 bars, so a good
+         SA cell (Jio, around -95 dBm) shows 1-2 bars. Use LTE-like steps. -->
+    <carrier_config>
+        <int-array name="5g_nr_ssrsrp_thresholds_int_array" num="4">
+            <item value="-125"/>
+            <item value="-115"/>
+            <item value="-105"/>
+            <item value="-95"/>
+        </int-array>
+    </carrier_config>
+
     <carrier_config>
         <string-array name="ratchet_rat_families" num="3">
         <item value="1,2" />
