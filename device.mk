@@ -527,6 +527,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal/mi_thermald/thermal-normal.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-redwood/thermal-normal.conf \
     $(LOCAL_PATH)/configs/thermal/mi_thermald/thermal-india-normal.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-redwood/thermal-india-normal.conf
 
+# userdebug: trust the debugging PC's ADB key from the start of boot, so adb
+# works while a boot hangs or loops, before system_server can ask to allow it.
+# Only debuggable builds install it.
+ifeq ($(TARGET_BUILD_VARIANT),userdebug)
+PRODUCT_ADB_KEYS := $(LOCAL_PATH)/configs/adb_keys
+endif
+
 # Touchscreen
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
