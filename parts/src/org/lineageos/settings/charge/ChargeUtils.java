@@ -46,7 +46,10 @@ public class ChargeUtils {
 
     public ChargeUtils(Context context) {
         this.context = context;
-        this.sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        // BypassChargeBootReceiver runs on LOCKED_BOOT_COMPLETED too, before the
+        // credential encrypted storage is unlocked, so keep this in device storage
+        this.sharedPrefs = PreferenceManager.getDefaultSharedPreferences(
+                context.createDeviceProtectedStorageContext());
     }
 
     public boolean isBypassChargeEnabled() {
