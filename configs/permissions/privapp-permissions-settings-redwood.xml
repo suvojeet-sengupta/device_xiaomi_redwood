@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-License-Identifier: Apache-2.0
+-->
+<!--
+    Settings permissions the redwood patches add. A privileged permission that
+    isn't allowlisted stops system_server at boot.
+-->
+<permissions>
+    <privapp-permissions package="com.android.settings">
+        <!-- Low power standby switch in the battery settings -->
+        <permission name="android.permission.MANAGE_LOW_POWER_STANDBY"/>
+    </privapp-permissions>
+</permissions>
