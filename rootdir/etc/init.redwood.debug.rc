@@ -1,6 +1,8 @@
-# Debuggable builds (userdebug): run adbd from the start of boot, so the logs
+# Debuggable builds (userdebug): run adbd as root from the start of boot, so the logs
 # of a boot that hangs or loops can be read with adb. A dirty flash keeps the
 # USB setting of the user build before it, which may have ADB off. User builds
 # aren't debuggable and skip this.
 on property:ro.debuggable=1
     setprop persist.sys.usb.config adb
+    # Start adbd as root, as after "adb root"
+    setprop service.adb.root 1
