@@ -2341,10 +2341,10 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
          SA cell (Jio, around -95 dBm) shows 1-2 bars. Use LTE-like steps. -->
     <carrier_config>
         <int-array name="5g_nr_ssrsrp_thresholds_int_array" num="4">
-            <item value="-125"/>
-            <item value="-115"/>
-            <item value="-105"/>
-            <item value="-95"/>
+            <item value="-130"/>
+            <item value="-120"/>
+            <item value="-110"/>
+            <item value="-100"/>
         </int-array>
     </carrier_config>
 
